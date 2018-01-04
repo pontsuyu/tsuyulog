@@ -1,68 +1,94 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Your Site Name</title>
+    <title>Tags on Blog Template</title>
     <link>/blog_template/tags/</link>
-    <description>Recent content in Tags on Your Site Name</description>
+    <description>Recent content in Tags on Blog Template</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <copyright>Your Site copyright</copyright>
-    <lastBuildDate>Wed, 02 Apr 2014 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Feb 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog_template/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Development</title>
-      <link>/blog_template/tags/development/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      <title>Blogdown</title>
+      <link>/blog_template/tags/blogdown/</link>
+      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>/blog_template/tags/development/</guid>
+      <guid>/blog_template/tags/blogdown/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Go</title>
-      <link>/blog_template/tags/go/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      <title>Lorem Ipsum</title>
+      <link>/blog_template/tags/lorem-ipsum/</link>
+      <pubDate>Tue, 28 Jul 2015 00:00:00 +0000</pubDate>
       
-      <guid>/blog_template/tags/go/</guid>
+      <guid>/blog_template/tags/lorem-ipsum/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Golang</title>
-      <link>/blog_template/tags/golang/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      <title>Markdown</title>
+      <link>/blog_template/tags/markdown/</link>
+      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>/blog_template/tags/golang/</guid>
+      <guid>/blog_template/tags/markdown/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Hugo</title>
-      <link>/blog_template/tags/hugo/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      <title>MathJax</title>
+      <link>/blog_template/tags/mathjax/</link>
+      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>/blog_template/tags/hugo/</guid>
+      <guid>/blog_template/tags/mathjax/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Templates</title>
-      <link>/blog_template/tags/templates/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      <title>Pandoc</title>
+      <link>/blog_template/tags/pandoc/</link>
+      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>/blog_template/tags/templates/</guid>
+      <guid>/blog_template/tags/pandoc/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Themes</title>
-      <link>/blog_template/tags/themes/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      <title>Plot</title>
+      <link>/blog_template/tags/plot/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
       
-      <guid>/blog_template/tags/themes/</guid>
+      <guid>/blog_template/tags/plot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R Markdown</title>
+      <link>/blog_template/tags/r-markdown/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      
+      <guid>/blog_template/tags/r-markdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RStudio</title>
+      <link>/blog_template/tags/rstudio/</link>
+      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog_template/tags/rstudio/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Regression</title>
+      <link>/blog_template/tags/regression/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      
+      <guid>/blog_template/tags/regression/</guid>
       <description></description>
     </item>
     
