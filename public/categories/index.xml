@@ -1,31 +1,75 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on Your Site Name</title>
+    <title>Categories on Blog Template</title>
     <link>/blog_template/categories/</link>
-    <description>Recent content in Categories on Your Site Name</description>
+    <description>Recent content in Categories on Blog Template</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <copyright>Your Site copyright</copyright>
     
 	<atom:link href="/blog_template/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Development</title>
-      <link>/blog_template/categories/development/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      <title>Example</title>
+      <link>/blog_template/categories/example/</link>
+      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>/blog_template/categories/development/</guid>
+      <guid>/blog_template/categories/example/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Golang</title>
-      <link>/blog_template/categories/golang/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      <title>Hugo</title>
+      <link>/blog_template/categories/hugo/</link>
+      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>/blog_template/categories/golang/</guid>
+      <guid>/blog_template/categories/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Leekaso</title>
+      <link>/blog_template/categories/leekaso/</link>
+      <pubDate>Mon, 27 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/blog_template/categories/leekaso/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Machine Learning</title>
+      <link>/blog_template/categories/machine-learning/</link>
+      <pubDate>Tue, 28 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/blog_template/categories/machine-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>/blog_template/categories/r/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      
+      <guid>/blog_template/categories/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Statistics</title>
+      <link>/blog_template/categories/statistics/</link>
+      <pubDate>Fri, 24 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/blog_template/categories/statistics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tech</title>
+      <link>/blog_template/categories/tech/</link>
+      <pubDate>Sat, 25 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/blog_template/categories/tech/</guid>
       <description></description>
     </item>
     
