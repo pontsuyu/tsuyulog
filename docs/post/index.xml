@@ -16,20 +16,12 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/post/pitchfx%E3%81%8B%E3%82%89%E8%A6%8B%E3%81%9F%E7%94%B0%E4%B8%AD%E5%B0%86%E5%A4%A7%E6%8A%95%E6%89%8B/</guid>
-      <description>Pitchf/xから見た田中将大投手 GitHub Documents This is an R Markdown format used for publishing markdown documents to GitHub. When you click the Knit button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
-Including Code You can include R code in the document as follows:
-summary(cars)  ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.</description>
-    </item>
-    
-    <item>
-      <title>Pitchf/xから見た田中将大投手</title>
-      <link>/post/pitchfx%E3%81%8B%E3%82%89%E8%A6%8B%E3%81%9F%E7%94%B0%E4%B8%AD%E5%B0%86%E5%A4%A7%E6%8A%95%E6%89%8B/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/post/pitchfx%E3%81%8B%E3%82%89%E8%A6%8B%E3%81%9F%E7%94%B0%E4%B8%AD%E5%B0%86%E5%A4%A7%E6%8A%95%E6%89%8B/</guid>
-      <description>GitHub Documents This is an R Markdown format used for publishing markdown documents to GitHub. When you click the Knit button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
- Including Code You can include R code in the document as follows:
-summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.</description>
+      <description>PITCHf/xから見た田中将大投手 Hiroyuki Tsuyuzaki 2018-01-04
+ PITCHf/xとは？ 田中将大投手の成績について データの取得  記念すべき新BLOGの初投稿です！ 今回は「PITCHf/xから見た田中将大投手」ということでPITCHf/xシステムを通じて取得したMLBの投球データを使っていろんな角度から田中将大投手を分析したいと思います。
+PITCHf/xとは？ PITCHf/xとは、SPORTVISION社が開発した投手の投球速度や投球軌道を追跡するスピード測定器システムです。 マウンドから本塁までの投球の球速、マグヌス効果によって引き起こされる変化の量、リリースポイント、スピン量、本塁上を通過した時にストライクゾーン内に入っているかを知ることが出来ます。
+引用：http://www.baseball-lab.jp/column/entry/128/
+田中将大投手の成績について 以下は田中投手のMLBでの成績です。
+   年 チーム 登板 投球回 完投 自責点 奪三振 勝 敗 セーブ WHIP 防御率     2017 ヤンキース 30 178 1&amp;frasl;3 1 94 194 13 12 0 1.24 4.74   2016 ヤンキース 31 199 2&amp;frasl;3 0 68 165 14 4 0 1.08 3.07   2015 ヤンキース 24 154 1 60 139 12 7 0 0.</description>
     </item>
     
   </channel>
