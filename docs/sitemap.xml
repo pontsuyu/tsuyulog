@@ -3,6 +3,13 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/post/2017-01-05_pitchfx/</loc>
+    <lastmod>2018-01-05T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/page/about/</loc>
     <lastmod>2014-04-09T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -10,14 +17,8 @@
   </url>
   
   <url>
-    <loc>/post/pitchfx%E3%81%8B%E3%82%89%E8%A6%8B%E3%81%9F%E7%94%B0%E4%B8%AD%E5%B0%86%E5%A4%A7%E6%8A%95%E6%89%8B/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>/</loc>
-    <lastmod>2014-04-09T00:00:00+00:00</lastmod>
+    <lastmod>2018-01-05T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
@@ -37,6 +38,7 @@
   
   <url>
     <loc>/post/</loc>
+    <lastmod>2018-01-05T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
