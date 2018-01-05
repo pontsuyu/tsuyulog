@@ -18,7 +18,7 @@ output:
 <p>PITCHf/xとは、SPORTVISION社が開発した投手の投球速度や投球軌道を追跡するスピード測定器システムです。<br />
 マウンドから本塁までの投球の球速、マグヌス効果によって引き起こされる変化の量、リリースポイント、スピン量、本塁上を通過した時にストライクゾーン内に入っているかを知ることが出来ます。</p>
 <div class="figure">
-<img src="https://user-images.githubusercontent.com/6095476/34591226-6799ebf6-f1ff-11e7-933c-812fa4ae5e7c.png" alt="pitchfx" />
+<img src="https://user-images.githubusercontent.com/6095476/34592967-33d1c4b8-f20b-11e7-990b-ea4ebddff76d.jpg" alt="pitchfx" />
 <p class="caption">pitchfx</p>
 </div>
 <p>引用：<a href="http://www.baseball-lab.jp/column/entry/128/" class="uri">http://www.baseball-lab.jp/column/entry/128/</a></p>
@@ -128,7 +128,7 @@ output:
 <p><a href="https://github.com/pontsuyu/pitchRx2" class="uri">https://github.com/pontsuyu/pitchRx2</a></p>
 <p>※基本的な使い方は<a href="https://pitchrx.cpsievert.me/">コチラ</a>を参照</p>
 <p><code>{pitchRx}</code>パッケージではスクレイピングする際、初めと終わりの日付を指定するか、gameidを指定するのですが、大抵必要なデータはその中の一部で全試合欲しい場合はほとんどないと思います。<code>{pitchRx2}</code>パッケージでは<code>get_gids()</code>というgameidの一覧を取得する関数を追加しました。start_yearとend_yearを指定すれば、その年の全てのgameidを取得することが出来ます。(<code>pitxhRx2::game_ids</code>にすでに2017年までのgameidデータが入ってるので、ご活用ください。)この関数を実行した後、<code>stringr::str_detect()</code>などで日付やチームを絞ってから<code>scrape()</code>を実行するのが、効率的かと思います。</p>
-<p><code>{PitchRx2}</code>パッケージはまだまだ改良の余地があるので要望があれば、<a href="https://twitter.com/ponsa__ku">twitter</a>でご連絡いただくか、Githubの<a href="https://github.com/pontsuyu/pitchRx2/issues">Issues</a>に書き込むなりしていただければと思います。</p>
+<p><code>{pitchRx2}</code>パッケージはまだまだ改良の余地があるので要望があれば、<a href="https://twitter.com/ponsa__ku">twitter</a>でご連絡いただくか、Githubの<a href="https://github.com/pontsuyu/pitchRx2/issues">Issues</a>に書き込むなりしていただければと思います。</p>
 <ol start="4" style="list-style-type: decimal">
 <li>セイバーメトリクス(DIPS, K/BB)について
 <ul>

@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 PITCHf/xとは、SPORTVISION社が開発した投手の投球速度や投球軌道を追跡するスピード測定器システムです。  
 マウンドから本塁までの投球の球速、マグヌス効果によって引き起こされる変化の量、リリースポイント、スピン量、本塁上を通過した時にストライクゾーン内に入っているかを知ることが出来ます。
 
-![pitchfx](https://user-images.githubusercontent.com/6095476/34591226-6799ebf6-f1ff-11e7-933c-812fa4ae5e7c.png)
+![pitchfx](https://user-images.githubusercontent.com/6095476/34592967-33d1c4b8-f20b-11e7-990b-ea4ebddff76d.jpg)
 
 引用：<http://www.baseball-lab.jp/column/entry/128/>
 
@@ -54,7 +54,7 @@ Rには既に`{pitchRx}`パッケージというまさにこれ専用の便利�
 
 `{pitchRx}`パッケージではスクレイピングする際、初めと終わりの日付を指定するか、gameidを指定するのですが、大抵必要なデータはその中の一部で全試合欲しい場合はほとんどないと思います。`{pitchRx2}`パッケージでは`get_gids()`というgameidの一覧を取得する関数を追加しました。start_yearとend_yearを指定すれば、その年の全てのgameidを取得することが出来ます。(`pitxhRx2::game_ids`にすでに2017年までのgameidデータが入ってるので、ご活用ください。)この関数を実行した後、`stringr::str_detect()`などで日付やチームを絞ってから`scrape()`を実行するのが、効率的かと思います。
 
-`{PitchRx2}`パッケージはまだまだ改良の余地があるので要望があれば、[twitter](https://twitter.com/ponsa__ku)でご連絡いただくか、Githubの[Issues](https://github.com/pontsuyu/pitchRx2/issues)に書き込むなりしていただければと思います。
+`{pitchRx2}`パッケージはまだまだ改良の余地があるので要望があれば、[twitter](https://twitter.com/ponsa__ku)でご連絡いただくか、Githubの[Issues](https://github.com/pontsuyu/pitchRx2/issues)に書き込むなりしていただければと思います。
 
 4. セイバーメトリクス(DIPS, K/BB)について
 	- ランキング形式でまとめる
