@@ -20,10 +20,10 @@ publishDir = "docs"
     name = "Home"
     url = "/"
     weight = 1
-[[menu.main]]
-    name = "About"
-    url = "/about/"
-    weight = 2
+#[[menu.main]]
+#    name = "About"
+#    url = "/about/"
+#    weight = 2
 [[menu.main]]
     name = "Categories"
     url = "/categories/"
@@ -32,9 +32,9 @@ publishDir = "docs"
     name = "Tags"
     url = "/tags/"
     weight = 4
-[[menu.main]]
-    name = "Subscribe"
-    url = "/index.xml"
+#[[menu.main]]
+#    name = "Subscribe"
+#    url = "/index.xml"
 
 [params]
     footer = "[Github](https://github.com/pontsuyu) | [Twitter](https://twitter.com/ponsa__ku)"
