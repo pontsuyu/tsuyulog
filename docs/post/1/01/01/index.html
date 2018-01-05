@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title> | Blog Template</title>
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../../../css/fonts.css" />
+    <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+
+  </head>
+
+  <body class="page">
+    <nav class="header">
+      <div class="banner" style="padding-bottom: 7pt;">
+<a href="../../../../" class="text">
+Blog Template
+</a>
+</div>
+
+    </nav>
+
+<div class="container">
+<article>
+<div class="article-meta">
+
+  <div class="categories">
+  
+  </div>
+
+  <h1><span class="title"></span></h1>
+
+  
+
+  
+  
+
+</div>
+
+
+
+<main>
+
+
+<h1 id="pitchf-xから見た田中将大投手">PITCHf/xから見た田中将大投手</h1>
+
+<p>Hiroyuki Tsuyuzaki
+2018-01-05</p>
+
+<ul>
+<li><a href="#pitchfxとは">PITCHf/xとは？</a></li>
+<li><a href="#田中将大投手の成績について">田中将大投手の成績について</a></li>
+<li><a href="#データの取得">データの取得</a></li>
+</ul>
+
+<p>記念すべき新BLOGの初投稿です！
+今回は「PITCHf/xから見た田中将大投手」ということでPITCHf/xシステムを通じて取得したMLBの投球データを使っていろんな角度から田中将大投手を分析したいと思います。</p>
+
+<h3 id="pitchf-xとは">PITCHf/xとは？</h3>
+
+<p>PITCHf/xとは、SPORTVISION社が開発した投手の投球速度や投球軌道を追跡するスピード測定器システムです。
+マウンドから本塁までの投球の球速、マグヌス効果によって引き起こされる変化の量、リリースポイント、スピン量、本塁上を通過した時にストライクゾーン内に入っているかを知ることが出来ます。</p>
+
+<p><img src="https://user-images.githubusercontent.com/6095476/34591226-6799ebf6-f1ff-11e7-933c-812fa4ae5e7c.png" alt="pitchfx" /></p>
+
+<p>引用：<a href="http://www.baseball-lab.jp/column/entry/128/">http://www.baseball-lab.jp/column/entry/128/</a></p>
+
+<h3 id="田中将大投手の成績について">田中将大投手の成績について</h3>
+
+<p>以下は田中投手のMLBでの成績です。</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">年</th>
+<th align="left">チーム</th>
+<th align="right">登板</th>
+<th align="right">投球回</th>
+<th align="right">完投</th>
+<th align="right">自責点</th>
+<th align="right">奪三振</th>
+<th align="right">勝</th>
+<th align="right">敗</th>
+<th align="right">セーブ</th>
+<th align="right">WHIP</th>
+<th align="right">防御率</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">2017</td>
+<td align="left">ヤンキース</td>
+<td align="right">30</td>
+<td align="right">178 <sup>1</sup>&frasl;<sub>3</sub></td>
+<td align="right">1</td>
+<td align="right"><span style="color: red">94</span></td>
+<td align="right"><span style="color: blue">194</span></td>
+<td align="right">13</td>
+<td align="right"><span style="color: red">12</span></td>
+<td align="right">0</td>
+<td align="right">1.24</td>
+<td align="right">4.74</td>
+</tr>
+
+<tr>
+<td align="left">2016</td>
+<td align="left">ヤンキース</td>
+<td align="right">31</td>
+<td align="right">199 <sup>2</sup>&frasl;<sub>3</sub></td>
+<td align="right">0</td>
+<td align="right">68</td>
+<td align="right">165</td>
+<td align="right">14</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">1.08</td>
+<td align="right">3.07</td>
+</tr>
+
+<tr>
+<td align="left">2015</td>
+<td align="left">ヤンキース</td>
+<td align="right">24</td>
+<td align="right">154</td>
+<td align="right">1</td>
+<td align="right">60</td>
+<td align="right">139</td>
+<td align="right">12</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">0.99</td>
+<td align="right">3.51</td>
+</tr>
+
+<tr>
+<td align="left">2014</td>
+<td align="left">ヤンキース</td>
+<td align="right">20</td>
+<td align="right">136 <sup>1</sup>&frasl;<sub>3</sub></td>
+<td align="right">3</td>
+<td align="right">42</td>
+<td align="right">141</td>
+<td align="right">13</td>
+<td align="right">5</td>
+<td align="right">0</td>
+<td align="right">1.06</td>
+<td align="right">2.77</td>
+</tr>
+
+<tr>
+<td align="left">通算</td>
+<td align="left"></td>
+<td align="right">105</td>
+<td align="right">668 <sup>1</sup>&frasl;<sub>3</sub></td>
+<td align="right">5</td>
+<td align="right">264</td>
+<td align="right">639</td>
+<td align="right">52</td>
+<td align="right">28</td>
+<td align="right">0</td>
+<td align="right">1.10</td>
+<td align="right">3.56</td>
+</tr>
+</tbody>
+</table>
+
+<p>2017年は、奪三振数と勝ち数が多かったものの自責点と負け数も多く、結果としてWHIP(Walks plus Hits per Inning Pitched、「投球回あたり与四球・被安打数合計」)の値が低くなってしまいました。</p>
+
+<p>これは調子、配球、球速、コントロールなどいったい何が要因だったのでしょうか。さっそくPITCHf/xのデータを使って見ていきましょう。</p>
+
+<p>※ WHIP = (与四球 + 被安打) ÷ 投球回
+1回に平均何人のランナーを出しているかという指標。一般に先発投手であれば1.00未満なら球界を代表するエースとされ、1.20未満ならエース級、逆に1.40を上回ると問題であると言われる。</p>
+
+<h3 id="データの取得">データの取得</h3>
+
+<p>まずPITCHf/xのデータの取得方法についてです。元データは<a href="http://gd2.mlb.com/components/">http://gd2.mlb.com/components/</a>にXML形式で置かれています。今回はRからこのデータをスクレイピングしてデータベースに格納してみましょう。</p>
+
+<p>Rには既に<code>{pitchRx}</code>パッケージというまさにこれ専用の便利なパッケージがあります。ただ使い勝手が少々悪かったので自分用に少々手を加えました。</p>
+
+<p><a href="https://github.com/pontsuyu/pitchRx2">https://github.com/pontsuyu/pitchRx2</a></p>
+
+<p>※基本的な使い方は<a href="https://pitchrx.cpsievert.me/">コチラ</a>を参照</p>
+
+<p><code>{pitchRx}</code>パッケージではスクレイピングする際、初めと終わりの日付を指定するか、gameidを指定するのですが、大抵必要なデータはその中の一部で全試合欲しい場合はほとんどないと思います。<code>{pitchRx2}</code>パッケージでは<code>get_gids()</code>というgameidの一覧を取得する関数を追加しました。start_yearとend_yearを指定すれば、その年の全てのgameidを取得することが出来ます。(<code>pitxhRx2::game_ids</code>にすでに2017年までのgameidデータが入ってるので、ご活用ください。)この関数を実行した後、<code>stringr::str_detect()</code>などで日付やチームを絞ってから<code>scrape()</code>を実行するのが、効率的かと思います。</p>
+
+<p><code>{PitchRx2}</code>パッケージはまだまだ改良の余地があるので要望があれば、<a href="https://twitter.com/ponsa__ku">twitter</a>でご連絡いただくか、Githubの<a href="https://github.com/pontsuyu/pitchRx2/issues">Issues</a>に書き込むなりしていただければと思います。</p>
+
+<ol>
+<li>セイバーメトリクス(DIPS, K/BB)について
+
+<ul>
+<li>ランキング形式でまとめる</li>
+</ul></li>
+<li>対打席結果のまとめ
+
+<ul>
+<li>2017年は被本塁打率の高いことを言及したい</li>
+</ul></li>
+<li>使用球種の比率のまとめ
+
+<ul>
+<li>ストレート率が低く、SFF率が高いことを言及</li>
+<li>リリースポイントに対するブレを言及</li>
+<li>どの球種が打たれているのかをまとめる</li>
+</ul></li>
+<li>緩急、キレ、ノビの分析</li>
+<li>つづく</li>
+</ol>
+
+</main>
+
+
+
+
+
+<nav class="post-nav">
+  <span class="nav-prev"><a href="../../../../post/2015/07/23/jeff-leek-is-the-uniformly-most-powerful-jeff/">&larr; Jeff Leek is the Uniformly Most Powerful Jeff</a></span>
+  <span class="nav-next"></span>
+</nav>
+
+
+
+</article>
+</div>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<footer>
+
+<div class="footer">
+  <ul class="menu">
+    
+    <li><a href="../../../../"><span data-hover="Home">Home</span></a></li>
+    
+    <li><a href="../../../../about/"><span data-hover="About">About</span></a></li>
+    
+    <li><a href="../../../../categories/"><span data-hover="Categories">Categories</span></a></li>
+    
+    <li><a href="../../../../tags/"><span data-hover="Tags">Tags</span></a></li>
+    
+    <li><a href="../../../../index.xml"><span data-hover="Subscribe">Subscribe</span></a></li>
+    
+  </ul>
+  
+  <div class="copyright">&copy; <a href="https://yihui.name">Yihui Xie</a> 2017 | <a href="https://github.com/yihui">Github</a> | <a href="https://twitter.com/xieyihui">Twitter</a></div>
+  
+</div>
+</footer>
+
+
+
+
+
+
+
+</body>
+</html>
+
