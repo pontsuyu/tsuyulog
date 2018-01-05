@@ -6,62 +6,26 @@
     <description>Recent content in Tags on Blog Template</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Tue, 14 Feb 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jan 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Blogdown</title>
-      <link>/tags/blogdown/</link>
-      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
+      <title>R</title>
+      <link>/tags/r/</link>
+      <pubDate>Fri, 05 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/blogdown/</guid>
+      <guid>/tags/r/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Lorem Ipsum</title>
-      <link>/tags/lorem-ipsum/</link>
-      <pubDate>Sun, 26 Jul 2015 00:00:00 +0000</pubDate>
+      <title>SABRmetrics</title>
+      <link>/tags/sabrmetrics/</link>
+      <pubDate>Fri, 05 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/lorem-ipsum/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Markdown</title>
-      <link>/tags/markdown/</link>
-      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/markdown/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>MathJax</title>
-      <link>/tags/mathjax/</link>
-      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/mathjax/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Pandoc</title>
-      <link>/tags/pandoc/</link>
-      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/pandoc/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>RStudio</title>
-      <link>/tags/rstudio/</link>
-      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/rstudio/</guid>
+      <guid>/tags/sabrmetrics/</guid>
       <description></description>
     </item>
     

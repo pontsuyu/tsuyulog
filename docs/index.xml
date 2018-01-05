@@ -6,74 +6,18 @@
     <description>Recent content in Hugo XMag on Blog Template</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Tue, 14 Feb 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jan 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>A Plain Markdown Post</title>
-      <link>/post/2017/02/14/a-plain-markdown-post/</link>
-      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
+      <title>PITCHf/xから見た田中将大投手</title>
+      <link>/post/2018/01/05/pitchf/x%E3%81%8B%E3%82%89%E8%A6%8B%E3%81%9F%E7%94%B0%E4%B8%AD%E5%B0%86%E5%A4%A7%E6%8A%95%E6%89%8B/</link>
+      <pubDate>Fri, 05 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/2017/02/14/a-plain-markdown-post/</guid>
-      <description>This sample post is mainly for blogdown users. If you do not use blogdown, you can skip the first section. To know more about the Hugo XMag theme, please read the About page.
-1. Markdown or R Markdown This is a post written in plain Markdown (*.md) instead of R Markdown (*.Rmd). The major differences are:
- You cannot run any R code in a plain Markdown document, whereas in an R Markdown document, you can embed R code chunks (```{r}); A plain Markdown post is rendered through Blackfriday, and an R Markdown document is compiled by rmarkdown and Pandoc.</description>
-    </item>
-    
-    <item>
-      <title>Jeff Leek counted to infinity. Twice.</title>
-      <link>/post/2015/07/26/jeff-leek-counted-to-infinity.-twice./</link>
-      <pubDate>Sun, 26 Jul 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2015/07/26/jeff-leek-counted-to-infinity.-twice./</guid>
-      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-Quisque mattis volutpat lorem vitae feugiat.</description>
-    </item>
-    
-    <item>
-      <title>Git commits to Jeff Leek</title>
-      <link>/post/2015/07/25/git-commits-to-jeff-leek/</link>
-      <pubDate>Sat, 25 Jul 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2015/07/25/git-commits-to-jeff-leek/</guid>
-      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-Quisque mattis volutpat lorem vitae feugiat.</description>
-    </item>
-    
-    <item>
-      <title>Jeff Leek always obtains unbiased estimators</title>
-      <link>/post/2015/07/24/jeff-leek-always-obtains-unbiased-estimators/</link>
-      <pubDate>Fri, 24 Jul 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2015/07/24/jeff-leek-always-obtains-unbiased-estimators/</guid>
-      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-Quisque mattis volutpat lorem vitae feugiat.</description>
-    </item>
-    
-    <item>
-      <title>Jeff Leek is the Uniformly Most Powerful Jeff</title>
-      <link>/post/2015/07/23/jeff-leek-is-the-uniformly-most-powerful-jeff/</link>
-      <pubDate>Thu, 23 Jul 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2015/07/23/jeff-leek-is-the-uniformly-most-powerful-jeff/</guid>
-      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-Quisque mattis volutpat lorem vitae feugiat.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/post/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/post/1/01/01/</guid>
-      <description>PITCHf/xから見た田中将大投手 Hiroyuki Tsuyuzaki 2018-01-05
- PITCHf/xとは？ 田中将大投手の成績について データの取得  記念すべき新BLOGの初投稿です！ 今回は「PITCHf/xから見た田中将大投手」ということでPITCHf/xシステムを通じて取得したMLBの投球データを使っていろんな角度から田中将大投手を分析したいと思います。
-PITCHf/xとは？ PITCHf/xとは、SPORTVISION社が開発した投手の投球速度や投球軌道を追跡するスピード測定器システムです。 マウンドから本塁までの投球の球速、マグヌス効果によって引き起こされる変化の量、リリースポイント、スピン量、本塁上を通過した時にストライクゾーン内に入っているかを知ることが出来ます。
-引用：http://www.baseball-lab.jp/column/entry/128/
-田中将大投手の成績について 以下は田中投手のMLBでの成績です。
-   年 チーム 登板 投球回 完投 自責点 奪三振 勝 敗 セーブ WHIP 防御率     2017 ヤンキース 30 178 1&amp;frasl;3 1 94 194 13 12 0 1.24 4.74   2016 ヤンキース 31 199 2&amp;frasl;3 0 68 165 14 4 0 1.08 3.07   2015 ヤンキース 24 154 1 60 139 12 7 0 0.</description>
+      <guid>/post/2018/01/05/pitchf/x%E3%81%8B%E3%82%89%E8%A6%8B%E3%81%9F%E7%94%B0%E4%B8%AD%E5%B0%86%E5%A4%A7%E6%8A%95%E6%89%8B/</guid>
+      <description>記念すべき新BLOGの初投稿です！ 今回は「PITCHf/xから見た田中将大投手」ということでPITCHf/xシステムを通じて取得したMLBの</description>
     </item>
     
     <item>

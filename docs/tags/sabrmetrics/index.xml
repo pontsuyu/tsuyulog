@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Blog Template</title>
-    <link>/post/</link>
-    <description>Recent content in Posts on Blog Template</description>
+    <title>SABRmetrics on Blog Template</title>
+    <link>/tags/sabrmetrics/</link>
+    <description>Recent content in SABRmetrics on Blog Template</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <lastBuildDate>Fri, 05 Jan 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/sabrmetrics/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
