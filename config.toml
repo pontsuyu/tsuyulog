@@ -1,6 +1,6 @@
 baseurl = "https://pontsuyu.github.io/blog_template/"
-languageCode = "ja-jp"
-title = "Blog Template"
+languageCode = "ja-JP"
+title = "Tsuyulog"
 theme = "hugo-xmag"
 googleAnalytics = ""
 disqusShortname = ""

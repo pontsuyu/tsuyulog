@@ -1,5 +1,5 @@
 <div class="banner" style="padding-bottom: 7pt;">
-<a href="{{ relURL .Site.BaseURL }}"{{ if not .Site.Params.banner }} class="text"{{ end }}>
+<a href="{{ relURL .Site.BaseURL }}"{{ if not .Site.Params.banner }} class="text"{{ end }} style='font-family: LaffRiotNF;font-weight: bold;'>
 {{ with .Site.Params.banner }}
 <img src="{{ relURL .src }}" alt="{{ .alt }}" />
 {{ else }}{{ .Site.Title }}

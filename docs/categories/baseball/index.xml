@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Baseball on Blog Template</title>
+    <title>Baseball on Tsuyulog</title>
     <link>/categories/baseball/</link>
-    <description>Recent content in Baseball on Blog Template</description>
+    <description>Recent content in Baseball on Tsuyulog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>ja-jp</language>
+    <language>ja-JP</language>
     <lastBuildDate>Fri, 05 Jan 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/baseball/index.xml" rel="self" type="application/rss+xml" />
