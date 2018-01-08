@@ -1,5 +1,5 @@
 ---
-title: "PITCHf/xから見た田中将大投手"
+title: "PITCHf/xから見た田中将大投手（１）"
 author: "Tsuyupon"
 date: "`r Sys.Date()`"
 categories: ["baseball"]
@@ -61,7 +61,7 @@ Rには既に`{pitchRx}`パッケージというまさにこれ専用の便利�
 
 `{pitchRx2}`パッケージはまだまだ改良の余地があるので要望があれば、[twitter](https://twitter.com/ponsa__ku)でご連絡いただくか、Githubの[Issues](https://github.com/pontsuyu/pitchRx2/issues)に書き込むなりしていただければと思います。
 
-```{r}
+```{r, message=FALSE}
 # devtools::install_github("pontsuyu/pitchRx2")
 library(pitchRx2)
 library(xml2)
@@ -158,26 +158,29 @@ ggplot(pt, aes(year_N, per, fill = pitch_type_name)) +
 
 捕手のリードの影響もありますが、当然右打者と左打者で攻め方が違って見えます。球種割合については、2014年のヒジの故障が影響しているせいか2015年以降Sliderの割合が増えて、その分Fastballの割合が下がっているようです。
 
-## 4. 球速・緩急
-打たれないようにするには球種だけでなく、球速・緩急も大事になってきます。
+## 4. コース
+打たれないようにするには球種だけでなく、コースも大事になってきます。
 
 ```{r, eval=F}
 library(animation)
 x <- list(facet_grid(stand ~ year, labeller = label_both), coord_equal())
 # アニメーションにして出力
-saveGIF({animateFX(pitch, layers = x, point.alpha = 0.3)},
-        interval = 0.01, movie.name = paste0(p_name, ".gif"),
-        width = 800, height=680)
+saveGIF({animateFX(pitch, layers = x, point.alpha = 0.5)},
+        interval = 1, movie.name = paste0(p_name, ".gif"), width = 800)
 ```
 
-![](![masahiro tanaka](https://user-images.githubusercontent.com/6095476/34661343-5f944264-f48c-11e7-8a1f-661e15530336.gif)
+![masahiro tanaka](https://user-images.githubusercontent.com/6095476/34661343-5f944264-f48c-11e7-8a1f-661e15530336.gif)
 
-## 対打席結果のまとめ
-	- 2017年は被本塁打率の高いことを言及したい
-## 使用球種の比率のまとめ
-	- ストレート率が低く、SFF率が高いことを言及
-	- リリースポイントに対するブレを言及
-	- どの球種が打たれているのかをまとめる
-## 緩急、キレ、ノビの分析
-## つづく
+あまり大きな差はないものの
+- 近年のリリースポイントのばらつき
+- 球種によってのコースに偏り
+が目立ちます。
+2016年・2017年はスライダーを多投している分、ピンクが目立ってますし、左打者に対するインコースのスライダーが多くなっているように見えます。
+
+
+
+## 次回予告
+- 対打席結果のまとめ
+	- 2017年は被本塁打率の高いことを言及
+- 緩急、キレ、ノビの分析
 

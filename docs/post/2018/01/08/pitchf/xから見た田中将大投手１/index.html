@@ -1,16 +1,54 @@
----
-title: "PITCHf/xから見た田中将大投手（１）"
-author: "Tsuyupon"
-date: "2018-01-08"
-categories: ["baseball"]
-tags: ["R", "セイバーメトリクス"]
-output:
-  blogdown::html_page:
-    toc: false
----
+<!DOCTYPE html>
+<html lang="ja-JP">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>PITCHf/xから見た田中将大投手（１） | Tsuyulog</title>
+    <link rel="stylesheet" href="../../../../../../css/style.css" />
+    <link rel="stylesheet" href="../../../../../../css/fonts.css" />
+    <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+
+  </head>
+
+  <body class="page">
+    <nav class="header">
+      <div class="banner" style="padding-bottom: 7pt;">
+<a href="../../../../../../" class="text" style='font-family: LaffRiotNF;font-weight: bold;'>
+Tsuyulog
+</a>
+</div>
+
+    </nav>
+
+<div class="container">
+<article>
+<div class="article-meta">
+
+  <div class="categories">
+  
+    <a href="../../../../../../categories/baseball">baseball</a>
+  
+  </div>
+
+  <h1><span class="title">PITCHf/xから見た田中将大投手（１）</span></h1>
+
+  
+  <h3 class="author">Tsuyupon
+</h3>
+  
+
+  
+  <p>Tags: <a href="../../../../../../tags/r">R</a>; <a href="../../../../../../tags/%E3%82%BB%E3%82%A4%E3%83%90%E3%83%BC%E3%83%A1%E3%83%88%E3%83%AA%E3%82%AF%E3%82%B9">セイバーメトリクス</a>
+  </p>
+  
+  
+
+</div>
 
 
 
+<main>
 <p>記念すべき新BLOGの初投稿です！<br />
 今回は「PITCHf/xから見た田中将大投手」ということでPITCHf/xシステムを通じて取得したMLBの投球データを使っていろんな角度から田中将大投手を分析したいと思います。</p>
 <div id="pitchfx" class="section level2">
@@ -222,7 +260,7 @@ ggplot(pt, aes(year_N, per, fill = pitch_type_name)) +
   geom_text(aes(label = round(per,digits = 2), y = cumsum), size = 3) +
   xlab(&quot;stand_year_pitching-N&quot;) + ylab(&quot;percent&quot;) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
-<p><img src="/post/2017-01-08-r-pitchfx_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="../../../../../../post/2017-01-08-r-pitchfx_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>捕手のリードの影響もありますが、当然右打者と左打者で攻め方が違って見えます。球種割合については、2014年のヒジの故障が影響しているせいか2015年以降Sliderの割合が増えて、その分Fastballの割合が下がっているようです。</p>
 </div>
 <div class="section level2">
@@ -249,3 +287,72 @@ saveGIF({animateFX(pitch, layers = x, point.alpha = 0.5)},
 <li>緩急、キレ、ノビの分析</li>
 </ul>
 </div>
+
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="post-nav">
+  <span class="nav-prev"></span>
+  <span class="nav-next"></span>
+</nav>
+
+
+
+</article>
+</div>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<footer>
+
+<div class="footer">
+  <ul class="menu">
+    
+    <li><a href="../../../../../../"><span data-hover="Home">Home</span></a></li>
+    
+    <li><a href="../../../../../../categories/"><span data-hover="Categories">Categories</span></a></li>
+    
+    <li><a href="../../../../../../tags/"><span data-hover="Tags">Tags</span></a></li>
+    
+  </ul>
+  
+  <div class="copyright"><a href="https://github.com/pontsuyu">Github</a> | <a href="https://twitter.com/ponsa__ku">Twitter</a></div>
+  
+</div>
+</footer>
+
+
+<script src="//yihui.name/js/math-code.js"></script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/r.min.js"></script>
+<script>
+hljs.configure({languages: []});
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</body>
+</html>
+
