@@ -161,15 +161,16 @@ ggplot(pt, aes(year_N, per, fill = pitch_type_name)) +
 ## 4. 球速・緩急
 打たれないようにするには球種だけでなく、球速・緩急も大事になってきます。
 
-```{r cache=TRUE}
+```{r, eval=F}
 library(animation)
 x <- list(facet_grid(stand ~ year, labeller = label_both), coord_equal())
 # アニメーションにして出力
 saveGIF({animateFX(pitch, layers = x, point.alpha = 0.3)},
-        interval = 0.01, movie.name = paste0(p_name, ".gif"))
+        interval = 0.01, movie.name = paste0(p_name, ".gif"),
+        width = 800, height=680)
 ```
 
-![](https://user-images.githubusercontent.com/6095476/34660601-ea8b69ac-f486-11e7-994b-2153a649b692.gif)
+![](![masahiro tanaka](https://user-images.githubusercontent.com/6095476/34661343-5f944264-f48c-11e7-8a1f-661e15530336.gif)
 
 ## 対打席結果のまとめ
 	- 2017年は被本塁打率の高いことを言及したい
