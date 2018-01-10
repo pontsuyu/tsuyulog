@@ -1,7 +1,7 @@
 ---
 title: "PITCHf/xから見た田中将大投手（１）"
 author: "Tsuyupon"
-date: "2018-01-08"
+date: "2018-01-11"
 categories: ["baseball"]
 tags: ["R", "セイバーメトリクス"]
 output:
@@ -131,15 +131,15 @@ output:
 <iframe class="hatenablogcard" src="https://hatenablog-parts.com/embed?url=https://github.com/pontsuyu/pitchRx2" width="300" height="150" frameborder="0" scrolling="no">
 </iframe>
 <p>※<code>{pitchRx}</code>パッケージの基本的な使い方は<a href="https://pitchrx.cpsievert.me/">コチラ</a>を参照。<br />
-<code>{pitchRx2}</code>パッケージでも可視化以外は同じ関数名で使えます。</p>
+<code>{pitchRx2}</code>パッケージでもinteractiveFX()関数以外は同じ関数名で使えます。</p>
 <p><code>{pitchRx}</code>パッケージではスクレイピングする際、初めと終わりの日付を指定するか、gameidを指定するのですが、大抵必要なデータはその中の一部で、全試合欲しい場合はほとんどないと思います。<code>{pitchRx2}</code>パッケージでは<code>get_gids()</code>というgameidの一覧を取得する関数を追加しました。start_yearとend_yearを指定すれば、その年の全てのgameidを取得することが出来ます(<code>pitxhRx2::game_ids</code>にすでに2017年までのgameidデータが入ってるので、ご活用ください)。この関数を実行した後、<code>stringr::str_detect()</code>などで日付やチームを絞ってから<code>scrape()</code>を実行するのが、効率的かと思います。</p>
 <p><code>{pitchRx2}</code>パッケージはまだまだ改良の余地があるので要望があれば、<a href="https://twitter.com/ponsa__ku">twitter</a>でご連絡いただくか、Githubの<a href="https://github.com/pontsuyu/pitchRx2/issues">Issues</a>に書き込むなりしていただければと思います。</p>
 <pre class="r"><code># devtools::install_github(&quot;pontsuyu/pitchRx2&quot;)
 library(pitchRx2)
 library(xml2)
 library(DBI)
-library(tidyverse)</code></pre>
-<pre class="r"><code># 2008〜2017年のgameidはあらかじめ用意してあるgame_idsをお使いください
+library(tidyverse)
+# 2008〜2017年のgameidはあらかじめ用意してあるgame_idsをお使いください
 # ヤンキースのデータに絞ります
 nya &lt;- game_ids %&gt;% str_subset(&quot;201[4-7].*nya.*&quot;)
 # スクレイピングしたデータの格納先を準備
@@ -153,7 +153,12 @@ db_list_tables(db$con)
 <div class="section level2">
 <h2>3. 球種割合</h2>
 <p>1球データをデータベースに格納できたのでクエリを実行し、データを抽出、分析します。</p>
-<pre class="r"><code># 2回目以降はこちらを実行
+<pre class="r"><code># devtools::install_github(&quot;pontsuyu/pitchRx2&quot;)
+library(pitchRx2)
+library(xml2)
+library(DBI)
+library(tidyverse)
+# 2回目以降はこちらを実行
 db &lt;- src_sqlite(&quot;nya.sqlite3&quot;, create = F)
 # データの抽出
 dat &lt;- dbGetQuery(db$con, &quot;SELECT
@@ -167,16 +172,16 @@ dat &lt;- dbGetQuery(db$con, &quot;SELECT
                   spin_rate, -- 回転数
                   spin_dir, -- 回転軸
                   px, pz, -- 投球ロケーション
-                  x0, y0, z0,
+                  x0, y0, z0, -- リリースポイント
                   vx0, vy0, vz0, -- 速度
                   ax, ay, az, -- 加速度
-                  b_height,
+                  b_height, -- バッターの身長(feet-inch)
                   break_angle, -- 変化角
                   break_length, -- 変化量
-                  pit.num as event_num,
+                  pit.num as event_num, -- 試合ごとのイベント番号
                   pit.des, -- 投球結果
-                  type,
-                  event,
+                  type,  -- 簡易投球結果
+                  event, -- 打席結果
                   atb.date -- 日時
                   FROM
                   atbat atb, -- 打席テーブル
@@ -214,7 +219,7 @@ pt &lt;- pitch %&gt;%
       group_by(year, stand) %&gt;% 
       mutate(cumsum = cumsum(per) - 0.5*per,
              year_N = paste0(stand, &quot;_&quot;, year, &quot;(N=&quot;, sum(N), &quot;)&quot;)) %&gt;% 
-      ungroup() %&gt;%
+      ungroup %&gt;%
       as.data.frame
 
 ggplot(pt, aes(year_N, per, fill = pitch_type_name)) + 
@@ -222,30 +227,101 @@ ggplot(pt, aes(year_N, per, fill = pitch_type_name)) +
   geom_text(aes(label = round(per,digits = 2), y = cumsum), size = 3) +
   xlab(&quot;stand_year_pitching-N&quot;) + ylab(&quot;percent&quot;) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
-<p><img src="/post/2017-01-08-r-pitchfx_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="/post/2017-01-08-r-pitchfx_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>捕手のリードの影響もありますが、当然右打者と左打者で攻め方が違って見えます。球種割合については、2014年のヒジの故障が影響しているせいか2015年以降Sliderの割合が増えて、その分Fastballの割合が下がっているようです。</p>
 </div>
 <div class="section level2">
 <h2>4. コース</h2>
-<p>打たれないようにするには球種だけでなく、コースも大事になってきます。</p>
+<p>打たれないようにするには球種だけでなく、コースも大事になってきます。マーくんの投球をアニメーションにして見てみましょう。投球は審判側から見て奥から手前に向かって投球しているイメージです。</p>
 <pre class="r"><code>library(animation)
 x &lt;- list(facet_grid(stand ~ year, labeller = label_both), coord_equal())
 # アニメーションにして出力
 saveGIF({animateFX(pitch, layers = x, point.alpha = 0.5)},
         interval = 1, movie.name = paste0(p_name, &quot;.gif&quot;), width = 800)</code></pre>
 <div class="figure">
-<img src="https://user-images.githubusercontent.com/6095476/34661343-5f944264-f48c-11e7-8a1f-661e15530336.gif" alt="masahiro tanaka" />
+<img src="https://user-images.githubusercontent.com/6095476/34783161-1d1da3c4-f66e-11e7-9a91-3c1453dd118c.gif" alt="masahiro tanaka" />
 <p class="caption">masahiro tanaka</p>
 </div>
-<p>あまり大きな差はないものの - 近年のリリースポイントのばらつき - 球種によってのコースに偏り が目立ちます。 2016年・2017年はスライダーを多投している分、ピンクが目立ってますし、左打者に対するインコースのスライダーが多くなっているように見えます。</p>
+<p>あまり大きな差はないものの近年の</p>
+<ul>
+<li>リリースポイントのばらつき</li>
+<li>球種ごとのコースの偏り</li>
+</ul>
+<p>が目立ちます。 2016年・2017年はスライダーを多投している分、ピンクが目立ちますし、左打者に対する甘い球が多くなっているように見えます。<br />
+では、実際打たれた球はどのような球種・コースだったのでしょうか。</p>
 </div>
 <div class="section level2">
-<h2>次回予告</h2>
+<h2>4. 対打席結果のまとめ</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">打席結果</th>
+<th align="right">2014</th>
+<th align="right">2015</th>
+<th align="right">2016</th>
+<th align="right">2017</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Batters faced(対戦打者数)</td>
+<td align="right">541</td>
+<td align="right">609</td>
+<td align="right">805</td>
+<td align="right">755</td>
+</tr>
+<tr class="even">
+<td align="left">Strikeout (奪三振)</td>
+<td align="right">141</td>
+<td align="right">139</td>
+<td align="right">165</td>
+<td align="right">194</td>
+</tr>
+<tr class="odd">
+<td align="left">Single (単打)</td>
+<td align="right">81</td>
+<td align="right">65</td>
+<td align="right">121</td>
+<td align="right">103</td>
+</tr>
+<tr class="even">
+<td align="left">Double (二塁打)</td>
+<td align="right">26</td>
+<td align="right">32</td>
+<td align="right">34</td>
+<td align="right">42</td>
+</tr>
+<tr class="odd">
+<td align="left">Triple (三塁打)</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Home Run (本塁打)</td>
+<td align="right">15</td>
+<td align="right">25</td>
+<td align="right">22</td>
+<td align="right">35</td>
+</tr>
+<tr class="odd">
+<td align="left">Walk (四球)</td>
+<td align="right">21</td>
+<td align="right">27</td>
+<td align="right">36</td>
+<td align="right">40</td>
+</tr>
+<tr class="even">
+<td align="left">Hit By Pitch (死球)</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">7</td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li>対打席結果のまとめ
-<ul>
-<li>2017年は被本塁打率の高いことを言及</li>
-</ul></li>
 <li>緩急、キレ、ノビの分析</li>
 </ul>
 </div>
