@@ -14,7 +14,8 @@
 
   <body class="page">
     <nav class="header">
-      <div class="banner" style="padding-bottom: 7pt;">
+      <link rel="icon" type="image/png" href="baseball.png">
+<div class="banner" style="padding-bottom: 7pt;">
 <a href="../../../../../../" class="text" style='font-family: LaffRiotNF;font-weight: bold;'>
 Tsuyulog
 </a>
@@ -166,39 +167,29 @@ Tsuyulog
 <div class="section level2">
 <h2>3. データの取得</h2>
 <p>まずPITCHf/xのデータの取得方法についてです。元データは<a href="http://gd2.mlb.com/components/" class="uri">http://gd2.mlb.com/components/</a>にXML形式で置かれています。今回はRからこのデータをスクレイピングしてデータベースに格納してみます。</p>
-<p>Rには既に<code>{pitchRx}</code>パッケージというまさにこれ専用の便利なパッケージがあります。ただ使い勝手が少々悪かったので自分用に少々手を加えました。</p>
+<p>Rには既に<code>{pitchRx}</code>パッケージというまさにこれ専用の便利なパッケージがあります。ただ使い勝手が悪く処理が遅かったため、時間のかかるapply系の部分を<code>{foreach}</code>パッケージを使って高速化したり、データベース作成を内部で完了させたりと自分用に少々手を加えました。</p>
 <iframe class="hatenablogcard" src="https://hatenablog-parts.com/embed?url=https://github.com/pontsuyu/pitchRx2" width="300" height="150" frameborder="0" scrolling="no">
 </iframe>
-<p>※<code>{pitchRx}</code>パッケージの基本的な使い方は<a href="https://pitchrx.cpsievert.me/">コチラ</a>を参照。<br />
-<code>{pitchRx2}</code>パッケージでもinteractiveFX()関数以外は同じ関数名で使えます。</p>
-<p><code>{pitchRx}</code>パッケージではスクレイピングする際、初めと終わりの日付を指定するか、gameidを指定するのですが、大抵必要なデータはその中の一部で、全試合欲しい場合はほとんどないと思います。<code>{pitchRx2}</code>パッケージでは<code>get_gids()</code>というgameidの一覧を取得する関数を追加しました。start_yearとend_yearを指定すれば、その年の全てのgameidを取得することが出来ます(<code>pitxhRx2::game_ids</code>にすでに2017年までのgameidデータが入ってるので、ご活用ください)。この関数を実行した後、<code>stringr::str_detect()</code>などで日付やチームを絞ってから<code>scrape()</code>を実行するのが、効率的かと思います。</p>
+<p>※<code>{pitchRx}</code>パッケージの基本的な使い方は<a href="https://pitchrx.cpsievert.me/">コチラ</a>を参照。現状<code>{pitchRx2}</code>パッケージではinning_allデータしか対応していません。(2018年1月20日現在)</p>
+<p><code>{pitchRx}</code>パッケージではスクレイピングする際、初めと終わりの日付を指定するか、gameidを指定するのですが、大抵必要なデータはその中の一部で、全試合欲しい場合はほとんどないと思います。<code>{pitchRx2}</code>パッケージでは<code>get_gids()</code>というgameidの一覧を取得する関数を追加しました。start_yearとend_yearを指定すれば、その年の全てのgameidを取得することが出来ます(<code>pitxhRx2::game_ids</code>にすでに2017年までのgameidデータが入ってるので、ご活用ください)。この関数を実行した後、<code>stringr::str_detect()</code>などで日付やチームを絞ってから<code>scrape_inning_all()</code>を実行するのが、効率的かと思います。</p>
 <p><code>{pitchRx2}</code>パッケージはまだまだ改良の余地があるので要望があれば、<a href="https://twitter.com/ponsa__ku">twitter</a>でご連絡いただくか、Githubの<a href="https://github.com/pontsuyu/pitchRx2/issues">Issues</a>に書き込むなりしていただければと思います。</p>
 <pre class="r"><code># devtools::install_github(&quot;pontsuyu/pitchRx2&quot;)
+# 必要なパッケージは同時読み込まれます
 library(pitchRx2)
-library(xml2)
-library(DBI)
-library(tidyverse)
 # 2008〜2017年のgameidはあらかじめ用意してあるgame_idsをお使いください
 # ヤンキースのデータに絞ります
 nya &lt;- game_ids %&gt;% str_subset(&quot;201[4-7].*nya.*&quot;)
-# スクレイピングしたデータの格納先を準備
-db &lt;- src_sqlite(&quot;nya.sqlite3&quot;, create = T)
-# スクレイピングの実行
-scrape(game.ids = nya, connect = db$con, suffix = &quot;inning/inning_all.xml&quot;)
-# テーブルを確認
-db_list_tables(db$con)
-# &quot;action&quot; &quot;atbat&quot; &quot;pitch&quot; &quot;po&quot; &quot;runner&quot;</code></pre>
+# スクレイピングの実行(だいたい30分くらい)
+scrape_inning_all(gid = nya, db_name = &quot;nya&quot;)</code></pre>
 </div>
 <div class="section level2">
 <h2>3. 球種割合</h2>
 <p>1球データをデータベースに格納できたのでクエリを実行し、データを抽出、分析します。</p>
-<pre class="r"><code># devtools::install_github(&quot;pontsuyu/pitchRx2&quot;)
-library(pitchRx2)
-library(xml2)
-library(DBI)
-library(tidyverse)
-# 2回目以降はこちらを実行
-db &lt;- src_sqlite(&quot;nya.sqlite3&quot;, create = F)
+<pre class="r"><code>db &lt;- src_sqlite(&quot;nya.sqlite3&quot;, create = F)
+db_list_tables(db$con)</code></pre>
+<pre><code>## [1] &quot;action&quot; &quot;atbat&quot;  &quot;pitch&quot;  &quot;po&quot;     &quot;runner&quot;</code></pre>
+<pre class="r"><code># &quot;action&quot; &quot;atbat&quot; &quot;pitch&quot; &quot;po&quot; &quot;runner&quot; &quot;sqlite_stat1&quot; &quot;sqlite_stat4&quot;
+# sqlite_stat1はデータベースに関する情報が入っている
 # データの抽出
 dat &lt;- dbGetQuery(db$con, &quot;SELECT
                   pitcher_name, -- 投手名
@@ -264,29 +255,53 @@ pt &lt;- pitch %&gt;%
 ggplot(pt, aes(year_N, per, fill = pitch_type_name)) + 
   geom_bar(stat = &quot;identity&quot;) +
   geom_text(aes(label = round(per,digits = 2), y = cumsum), size = 3) +
-  xlab(&quot;stand_year_pitching-N&quot;) + ylab(&quot;percent&quot;) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
+  ggtitle(paste0(&quot;Proportion of pitch types (&quot;, p_name, &quot;)&quot;)) +
+  xlab(&quot;stand_year_pitching-N&quot;) + ylab(&quot;percent&quot;) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(hjust = 0.5))</code></pre>
 <p><img src="../../../../../../post/2017-01-08-r-pitchfx_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>捕手のリードの影響もありますが、当然右打者と左打者で攻め方が違って見えます。球種割合については、2014年のヒジの故障が影響しているせいか2015年以降Sliderの割合が増えて、その分Fastballの割合が下がっているようです。</p>
+<p>捕手のリードの影響もありますが、当然右打者と左打者で攻め方が違って見えます。球種割合については近年Sliderの割合が増え、その分Fastball(cutter, four-seam)の割合が下がっているようです。ただこれだけではもちろんなんとも言えないので、さらに深掘りしていきましょう。</p>
 </div>
 <div class="section level2">
 <h2>4. コース</h2>
 <p>打たれないようにするには球種だけでなく、コースも大事になってきます。マーくんの投球をアニメーションにして見てみましょう。投球は審判側から見て奥から手前に向かって投球しているイメージです。</p>
 <pre class="r"><code>library(animation)
+# animateFXの出力に対し、追加したい層を指定(1個1個の要素が「＋」で足されていくイメージ)
 x &lt;- list(facet_grid(stand ~ year, labeller = label_both), coord_equal())
 # アニメーションにして出力
 saveGIF({animateFX(pitch, layers = x, point.alpha = 0.5)},
-        interval = 1, movie.name = paste0(p_name, &quot;.gif&quot;), width = 800)</code></pre>
+        interval = 1.0, movie.name = paste0(p_name, &quot;.gif&quot;), width = 800)</code></pre>
 <div class="figure">
-<img src="https://user-images.githubusercontent.com/6095476/34783161-1d1da3c4-f66e-11e7-9a91-3c1453dd118c.gif" alt="masahiro tanaka" />
-<p class="caption">masahiro tanaka</p>
+<img src="https://user-images.githubusercontent.com/6095476/35471220-25426380-039a-11e8-8262-ca441246bcd0.gif" />
+
 </div>
-<p>あまり大きな差はないものの近年の</p>
+<pre class="r"><code>snapshot &lt;- getSnapshots(pitch, interval = 0.01)
+last_snapshot &lt;- as.data.frame(snapshot[,dim(snapshot)[2]-1,])
+colnames(last_snapshot) &lt;- c(&quot;Horizon&quot;, &quot;y&quot;, &quot;Height&quot;)
+last_snapshot &lt;- cbind(pitch, last_snapshot)
+last_snapshot &lt;- inner_join(last_snapshot, pitch_type) %&gt;% filter(pitch_type_name!=&quot;Pitchout&quot;)
+strikezone &lt;- list()
+for(i in 1:4) strikezone[[i]] &lt;- getStrikezones(pitch[pitch$year == i+2013,]) %&gt;% as.data.frame
+names(strikezone) &lt;- c(2014:2017)
+strikezone &lt;- bind_rows(strikezone, .id = &quot;year&quot;)
+last_snapshot &lt;- inner_join(last_snapshot, strikezone)
+theme_set(theme_bw(base_family = &quot;Osaka&quot;))
+ggplot(last_snapshot, aes(Horizon, Height, color=pitch_type_name)) + 
+       stat_density2d(aes(fill=pitch_type_name), geom=&quot;polygon&quot;, bins=1.5, alpha=.2) +
+       geom_rect(aes(ymax = Top, ymin = Bottom, xmax = Right, xmin = Left),
+                 alpha = 0, colour = &quot;black&quot;) +
+       xlim(-2, 2) + ylim(0.5, 4) +
+       ggtitle(&quot;球種ごとのコース別 density plot&quot;) + 
+       xlab(&quot;Horizontal Pitch Location&quot;) + ylab(&quot;Height From Ground&quot;) + 
+       facet_grid(stand ~ year, labeller = label_both) +
+       coord_equal()</code></pre>
+<p><img src="../../../../../../post/2017-01-08-r-pitchfx_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>左打者・右打者ともに外角低めに集まっていますが、近年のマーくんには</p>
 <ul>
 <li>リリースポイントのばらつき</li>
-<li>球種ごとのコースの偏り</li>
+<li>左打者に対する甘い球</li>
 </ul>
-<p>が目立ちます。 2016年・2017年はスライダーを多投している分、ピンクが目立ちますし、左打者に対する甘い球が多くなっているように見えます。<br />
+<p>が多くなっているように見えます。2017年はMLB全体でも過去最多の本塁打数を記録しましたが、マーくん自身もリーグ3位の35本塁打を浴びてしまいました。<br />
 では、実際打たれた球はどのような球種・コースだったのでしょうか。</p>
 </div>
 <div class="section level2">
@@ -360,9 +375,14 @@ saveGIF({animateFX(pitch, layers = x, point.alpha = 0.5)},
 </tr>
 </tbody>
 </table>
-<ul>
-<li>緩急、キレ、ノビの分析</li>
-</ul>
+<pre class="r"><code>pitch_x &lt;- pitch %&gt;% filter(type==&quot;X&quot;, event %in% c(&quot;Single&quot;, &quot;Double&quot;, &quot;Triple&quot;, &quot;Home Run&quot;))
+x &lt;- list(facet_grid(stand ~ year, labeller = label_both), coord_equal())
+saveGIF({animateFX(pitch_x, layers = x, point.alpha = 0.5)},
+        interval = 1.0, movie.name = paste0(p_name, &quot;_x.gif&quot;), width = 800)</code></pre>
+<div class="figure">
+<img src="https://user-images.githubusercontent.com/6095476/35471572-fe64431c-03a0-11e8-997c-8e189374d920.gif" />
+
+</div>
 </div>
 
 </main>
@@ -390,6 +410,7 @@ saveGIF({animateFX(pitch, layers = x, point.alpha = 0.5)},
 </nav>
 
 
+<link rel="icon" type="image/png" href="baseball.png">
 
 </article>
 </div>
