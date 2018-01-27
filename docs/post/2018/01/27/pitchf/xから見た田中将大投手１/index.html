@@ -270,9 +270,9 @@ ggplot(pt, aes(year_N, per, fill = pitch_type_name)) +
 x &lt;- list(facet_grid(stand ~ year, labeller = label_both), coord_equal())
 # アニメーションにして出力
 saveGIF({animateFX(pitch, layers = x, point.alpha = 0.5)},
-        interval = 1.0, movie.name = paste0(p_name, &quot;.gif&quot;), width = 800)</code></pre>
+        interval = 1.0, movie.name = paste0(p_name, &quot;.gif&quot;), width = 1200)</code></pre>
 <div class="figure">
-<img src="https://user-images.githubusercontent.com/6095476/35471220-25426380-039a-11e8-8262-ca441246bcd0.gif" />
+<img src="https://user-images.githubusercontent.com/6095476/35472029-fc24fa88-03aa-11e8-96d2-d776579d1de3.gif" />
 
 </div>
 <pre class="r"><code>snapshot &lt;- getSnapshots(pitch, interval = 0.01)
@@ -378,9 +378,9 @@ ggplot(last_snapshot, aes(Horizon, Height, color=pitch_type_name)) +
 <pre class="r"><code>pitch_x &lt;- pitch %&gt;% filter(type==&quot;X&quot;, event %in% c(&quot;Single&quot;, &quot;Double&quot;, &quot;Triple&quot;, &quot;Home Run&quot;))
 x &lt;- list(facet_grid(stand ~ year, labeller = label_both), coord_equal())
 saveGIF({animateFX(pitch_x, layers = x, point.alpha = 0.5)},
-        interval = 1.0, movie.name = paste0(p_name, &quot;_x.gif&quot;), width = 800)</code></pre>
+        interval = 1.0, movie.name = paste0(p_name, &quot;_x.gif&quot;), width = 1200)</code></pre>
 <div class="figure">
-<img src="https://user-images.githubusercontent.com/6095476/35471572-fe64431c-03a0-11e8-997c-8e189374d920.gif" />
+<img src="https://user-images.githubusercontent.com/6095476/35472033-1befc762-03ab-11e8-937c-7e5c42afcdfa.gif" />
 
 </div>
 </div>

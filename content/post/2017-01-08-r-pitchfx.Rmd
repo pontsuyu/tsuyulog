@@ -74,7 +74,7 @@ scrape_inning_all(gid = nya, db_name = "nya")
 ## 3. 球種割合
 1球データをデータベースに格納できたのでクエリを実行し、データを抽出、分析します。
 
-```{r, echo=-1, cache=TRUE, message=FALSE}
+```{r, echo=-1, message=FALSE}
 library(pitchRx2)
 db <- src_sqlite("nya.sqlite3", create = F)
 db_list_tables(db$con)
@@ -164,10 +164,10 @@ library(animation)
 x <- list(facet_grid(stand ~ year, labeller = label_both), coord_equal())
 # アニメーションにして出力
 saveGIF({animateFX(pitch, layers = x, point.alpha = 0.5)},
-        interval = 1.0, movie.name = paste0(p_name, ".gif"), width = 800)
+        interval = 1.0, movie.name = paste0(p_name, ".gif"), width = 1200)
 ```
 
-![](https://user-images.githubusercontent.com/6095476/35471220-25426380-039a-11e8-8262-ca441246bcd0.gif)
+![](https://user-images.githubusercontent.com/6095476/35472029-fc24fa88-03aa-11e8-96d2-d776579d1de3.gif)
 
 ```{r, echo=-1, message=FALSE, warning=FALSE}
 library(pitchRx2)
@@ -218,9 +218,9 @@ ggplot(last_snapshot, aes(Horizon, Height, color=pitch_type_name)) +
 pitch_x <- pitch %>% filter(type=="X", event %in% c("Single", "Double", "Triple", "Home Run"))
 x <- list(facet_grid(stand ~ year, labeller = label_both), coord_equal())
 saveGIF({animateFX(pitch_x, layers = x, point.alpha = 0.5)},
-        interval = 1.0, movie.name = paste0(p_name, "_x.gif"), width = 800)
+        interval = 1.0, movie.name = paste0(p_name, "_x.gif"), width = 1200)
 ```
 
-![](https://user-images.githubusercontent.com/6095476/35471572-fe64431c-03a0-11e8-997c-8e189374d920.gif)
+![](https://user-images.githubusercontent.com/6095476/35472033-1befc762-03ab-11e8-937c-7e5c42afcdfa.gif)
 
 
