@@ -1,7 +1,7 @@
 ---
 title: "PITCHf/xから見た田中将大投手（１）"
 author: "Tsuyupon"
-date: "2018-02-28"
+date: "2018-01-28"
 categories: ["baseball"]
 tags: ["R", "セイバーメトリクス"]
 output:
@@ -217,7 +217,7 @@ ggplot(pt, aes(year_N, per, fill = pitch_type_name)) +
   xlab(&quot;stand_year_pitching-N&quot;) + ylab(&quot;percent&quot;) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
         plot.title = element_text(hjust = 0.5))</code></pre>
-<p><img src="/post/2017-01-28-r-pitchfx_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="/post/2018-01-28-r-pitchfx_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>捕手のリードの影響もありますが、当然右打者と左打者で攻め方が違って見えます。球種割合については近年Sliderの割合が増え、その分Fastball(cutter, four-seam)の割合が下がっているようです。</p>
 </div>
 <div class="section level2">
@@ -255,7 +255,7 @@ ggplot(last_snapshot, aes(Horizon, Height, color=pitch_type_name)) +
        xlab(&quot;Horizontal Pitch Location&quot;) + ylab(&quot;Height From Ground&quot;) + 
        facet_grid(stand ~ year, labeller = label_both) +
        coord_equal()</code></pre>
-<p><img src="/post/2017-01-28-r-pitchfx_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="/post/2018-01-28-r-pitchfx_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>左打者・右打者ともに外角低めに集まっていますが、近年の田中将大投手には</p>
 <ul>
 <li>リリースポイントのばらつき</li>
