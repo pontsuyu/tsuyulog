@@ -1,16 +1,65 @@
----
-title: "PITCHf/xから見た田中将大投手（１）"
-author: "Tsuyupon"
-date: "2018-02-28"
-categories: ["baseball"]
-tags: ["R", "セイバーメトリクス"]
-output:
-  blogdown::html_page:
-    toc: false
----
+<!DOCTYPE html>
+<html lang="ja-JP">
+  <head>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113316669-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-113316669-1');
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="baseball.png">
+    
+    <title>PITCHf/xから見た田中将大投手（１） | Tsuyulog</title>
+    <link rel="stylesheet" href="../../../../../../css/style.css" />
+    <link rel="stylesheet" href="../../../../../../css/fonts.css" />
+    <link rel="icon" type="image/png" href="baseball.png">
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+
+  </head>
+
+  <body class="page">
+    <nav class="header">
+      <div class="banner" style="padding-bottom: 7pt;">
+<a href="../../../../../../" class="text" style='font-family: LaffRiotNF;font-weight: bold;'>
+Tsuyulog
+</a>
+</div>
+
+    </nav>
+
+<div class="container">
+<article>
+<div class="article-meta">
+
+  <div class="categories">
+  
+    <a href="../../../../../../categories/baseball">baseball</a>
+  
+  </div>
+
+  <h1><span class="title">PITCHf/xから見た田中将大投手（１）</span></h1>
+
+  
+  <h3 class="author">Tsuyupon
+</h3>
+  
+
+  
+  <p>Tags: <a href="../../../../../../tags/r">R</a>; <a href="../../../../../../tags/%E3%82%BB%E3%82%A4%E3%83%90%E3%83%BC%E3%83%A1%E3%83%88%E3%83%AA%E3%82%AF%E3%82%B9">セイバーメトリクス</a>
+  </p>
+  
+  
+
+</div>
 
 
 
+<main>
 <p>今回は「PITCHf/xから見た田中将大投手」ということでPITCHf/xシステムを通じて取得したMLBの投球データを使っていろんな角度から田中将大投手を見てみたいと思います。</p>
 <div id="pitchfx" class="section level2">
 <h2>1. PITCHf/xとは？</h2>
@@ -217,7 +266,7 @@ ggplot(pt, aes(year_N, per, fill = pitch_type_name)) +
   xlab(&quot;stand_year_pitching-N&quot;) + ylab(&quot;percent&quot;) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
         plot.title = element_text(hjust = 0.5))</code></pre>
-<p><img src="/post/2017-01-28-r-pitchfx_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="../../../../../../post/2017-01-28-r-pitchfx_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>捕手のリードの影響もありますが、当然右打者と左打者で攻め方が違って見えます。球種割合については近年Sliderの割合が増え、その分Fastball(cutter, four-seam)の割合が下がっているようです。</p>
 </div>
 <div class="section level2">
@@ -255,7 +304,7 @@ ggplot(last_snapshot, aes(Horizon, Height, color=pitch_type_name)) +
        xlab(&quot;Horizontal Pitch Location&quot;) + ylab(&quot;Height From Ground&quot;) + 
        facet_grid(stand ~ year, labeller = label_both) +
        coord_equal()</code></pre>
-<p><img src="/post/2017-01-28-r-pitchfx_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="../../../../../../post/2017-01-28-r-pitchfx_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>左打者・右打者ともに外角低めに集まっていますが、近年の田中将大投手には</p>
 <ul>
 <li>リリースポイントのばらつき</li>
@@ -368,3 +417,72 @@ round(prop.table(table(pitch_x$year, pitch_x$pitch_type_name),margin = 1)*100,di
 </ul>
 <p>を深掘りしたいと思います。</p>
 </div>
+
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="post-nav">
+  <span class="nav-prev"></span>
+  <span class="nav-next"><a href="../../../../../../post/2018/02/28/viewpipesteps%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%82%92%E8%A6%8B%E3%81%A6%E3%81%BF%E3%81%9F/">ViewPipeStepsの中身を見てみた &rarr;</a></span>
+</nav>
+
+
+
+</article>
+</div>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<footer>
+
+<div class="footer">
+  <ul class="menu">
+    
+    <li><a href="../../../../../../"><span data-hover="Home">Home</span></a></li>
+    
+    <li><a href="../../../../../../categories/"><span data-hover="Categories">Categories</span></a></li>
+    
+    <li><a href="../../../../../../tags/"><span data-hover="Tags">Tags</span></a></li>
+    
+  </ul>
+  
+  <div class="copyright"><a href="https://github.com/pontsuyu">Github</a> | <a href="https://twitter.com/ponsa__ku">Twitter</a></div>
+  
+</div>
+</footer>
+
+
+<script src="//yihui.name/js/math-code.js"></script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/r.min.js"></script>
+<script>
+hljs.configure({languages: []});
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+  <head>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113316669-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-113316669-1');
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="baseball.png">
+    
+    <title>ViewPipeStepsの中身を見てみた | Tsuyulog</title>
+    <link rel="stylesheet" href="../../../../../css/style.css" />
+    <link rel="stylesheet" href="../../../../../css/fonts.css" />
+    <link rel="icon" type="image/png" href="baseball.png">
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+
+  </head>
+
+  <body class="page">
+    <nav class="header">
+      <div class="banner" style="padding-bottom: 7pt;">
+<a href="../../../../../" class="text" style='font-family: LaffRiotNF;font-weight: bold;'>
+Tsuyulog
+</a>
+</div>
+
+    </nav>
+
+<div class="container">
+<article>
+<div class="article-meta">
+
+  <div class="categories">
+  
+    <a href="../../../../../categories/packages">packages</a>
+  
+  </div>
+
+  <h1><span class="title">ViewPipeStepsの中身を見てみた</span></h1>
+
+  
+  <h3 class="author">Tsuyupon
+</h3>
+  
+
+  
+  <p>Tags: <a href="../../../../../tags/r">R</a>
+  </p>
+  
+  
+
+</div>
+
+
+
+<main>
+<p>便利そうなパッケージを教えてもらいました。</p>
+<iframe class="hatenablogcard" src="https://hatenablog-parts.com/embed?url=https://github.com/daranzolin/ViewPipeSteps" width="300" height="150" frameborder="0" scrolling="no">
+</iframe>
+<p>どうやら選択した行のパイプ<code>%&gt;%</code>ごとの結果に<code>View</code>関数を適用してくれるRStudio addinのようです。</p>
+<pre class="r"><code># devtools::install_github(&quot;daranzolin/ViewPipeSteps&quot;)
+library(dplyr)
+iris %&gt;% 
+  select(Species, Petal.Length) %&gt;% 
+  filter(Petal.Length &gt; 1.6) %&gt;% 
+  group_by(Species) %&gt;% 
+  summarise(plsum = sum(Petal.Length))
+# 上記4行を選択してAddinsボタンから「View Pipe Chain Steps」を選択</code></pre>
+<div class="figure">
+<img src="https://camo.githubusercontent.com/36ca210a55f91a425118da53bb189d434995b145/68747470733a2f2f6d656469612e67697068792e636f6d2f6d656469612f323470375132446b46707935736c52684f792f67697068792e676966" />
+
+</div>
+<p>おー、便利そう。<br> ショートカットキー設定しておけば、こういうパイプごとの検証をマウス使わずに全部完結できますね。 <br><br> では、このアドインの中で何が行われているのでしょうか？<br> Rフォルダの中を見てみたいと思います。</p>
+<div class="section level2">
+<h2>1. アドインの中身</h2>
+<p>まずは<a href="https://github.com/daranzolin/ViewPipeSteps/blob/master/R/utils.R">R/utils.R</a>を見てみましょう。</p>
+<pre class="r"><code># 1~2要素目,1~3要素目といったパイプごとのまとまりを表すベクトルを返す
+createCalls &lt;- function(x) {
+  # 空白除去
+  x &lt;- purrr::map_chr(x, stringr::str_trim)
+  calls &lt;- list()
+  # group_by系は無視
+  # パイプの区切りごとに&quot;View(&quot;を足していく
+  # ここがキーポイント
+  for (i in 2:length(x)) {
+    if (grepl(&quot;group_by&quot;, x[i])) next
+    call &lt;- paste(paste(x[1:i], collapse = &quot; &quot;), &quot;View(&quot;)
+    calls[[i]] &lt;- call
+  }
+  # nullは除去
+  invisible(purrr::discard(calls, is.null))
+}</code></pre>
+<pre class="r"><code># View()で出てくるタブ名を生成
+createViewTitles &lt;- function(steps) {
+  # group_by系を含む数を計算
+  gbs &lt;- sum(stringr::str_detect(steps, &quot;group_by&quot;))
+  stepInds &lt;- 2:(length(steps) - gbs)
+  # 最初の要素は無視
+  # それぞれの要素の関数名をとってくる
+  steps &lt;- tail(purrr::map(strsplit(steps, &quot;\\(&quot;), `[[`, 1), -1) %&gt;%
+    purrr::discard(~grepl(&quot;group_by&quot;, .)) %&gt;%
+    purrr::map_chr(stringr::str_trim)
+  sprintf(&quot;%s. %s&quot;, (stepInds - 1), steps)
+}</code></pre>
+<pre class="r"><code>createViews &lt;- function(calls, titles) {
+  # タイトルと閉じ括弧を追加
+  calls &lt;- sprintf(&quot;%s title = &#39;%s&#39;)&quot;, calls, titles)
+  # eval()の結果とエラーとメッセージをリストで返す関数を新たに作る
+  safeEval &lt;- purrr::safely(eval)
+  # ここでcallsの各要素の内容を実行する
+  cList &lt;-  purrr::map(calls, ~safeEval(parse(text = .)))
+  # エラーになった箇所を教えるメッセージを出力する
+  for (i in seq_along(cList)) {
+    if (!is.null(cList[[i]]$error)) {
+      w &lt;- sprintf(&quot;Pipe error at step %s: %s&quot;, titles[i], cList[[i]]$error)
+      stop(w, call. = FALSE)
+    }
+  }
+}</code></pre>
+<p>意外とシンプルな構成要素で出来てましたね。<br> これを利用して<a href="https://twitter.com/hoxo_m/status/967655107255922690">@hoxo_mさんがおっしゃってた</a> <code>zeallot</code>パッケージを使った<code>c(N, M) %&lt;-% dim(x)</code>の形式に倣って、<br></p>
+<pre><code>c(SEL, FIL, SUM) %&lt;-% hogehoge({
+  iris %&gt;% 
+    select(Species, Petal.Length) %&gt;% 
+    filter(Petal.Length &gt; 1.6) %&gt;% 
+    group_by(Species) %&gt;% 
+    summarise(plsum = sum(Petal.Length))
+  })</code></pre>
+<p>↑みたいなことも出来そうですね。使いどころがあるかと言われると微妙ですが…。</p>
+<p>次に<a href="https://github.com/daranzolin/ViewPipeSteps/blob/master/R/viewPipeChain.R">R/viewPipeChain.R</a>を見てみます。</p>
+<pre class="r"><code>viewPipeChain &lt;- function() {
+  # 選択行の取得
+  context &lt;- rstudioapi::getActiveDocumentContext()
+  # 改行\nの除去
+  pc &lt;- stringr::str_remove_all(context$selection[[1]]$text, &quot;\n&quot;)
+  #if (!grepl(&quot;%&gt;%&quot;, pc)) stop(&quot;Must highlight a pipe sequence&quot;, call. = FALSE)
+  # パイプ区切りにベクトル化
+  pc &lt;- paste(strsplit(pc, &quot;%&gt;%&quot;)[[1]], &quot;%&gt;%&quot;)
+  # 上で説明した関数を実行していく
+  pcTitles &lt;- createViewTitles(pc)
+  pcCalls &lt;- createCalls(pc)
+  createViews(pcCalls, pcTitles)
+}</code></pre>
+<p>utils.Rで作成した関数を選択行に対して実行していく関数のようです。 <code>rstudioapi::getActiveDocumentContext()</code>は選択行（アクティブになっている行）に関する情報を格納してくれるもので、<code>context$selection[[1]]$text</code>に選択行が文字列として格納されます。これは<code>ggThemeAssist</code>パッケージでも使われて、多くのアドインで使われている関数です。</p>
+</div>
+<div class="section level2">
+<h2>2. まとめ</h2>
+<p>今回はパッケージの紹介と中身を見てみたということでこれで終わりです。<br></p>
+</div>
+
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="post-nav">
+  <span class="nav-prev"><a href="../../../../../post/2018/02/28/pitchf/x%E3%81%8B%E3%82%89%E8%A6%8B%E3%81%9F%E7%94%B0%E4%B8%AD%E5%B0%86%E5%A4%A7%E6%8A%95%E6%89%8B%EF%BC%91/">&larr; PITCHf/xから見た田中将大投手（１）</a></span>
+  <span class="nav-next"></span>
+</nav>
+
+
+
+</article>
+</div>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<footer>
+
+<div class="footer">
+  <ul class="menu">
+    
+    <li><a href="../../../../../"><span data-hover="Home">Home</span></a></li>
+    
+    <li><a href="../../../../../categories/"><span data-hover="Categories">Categories</span></a></li>
+    
+    <li><a href="../../../../../tags/"><span data-hover="Tags">Tags</span></a></li>
+    
+  </ul>
+  
+  <div class="copyright"><a href="https://github.com/pontsuyu">Github</a> | <a href="https://twitter.com/ponsa__ku">Twitter</a></div>
+  
+</div>
+</footer>
+
+
+<script src="//yihui.name/js/math-code.js"></script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/r.min.js"></script>
+<script>
+hljs.configure({languages: []});
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</body>
+</html>
+

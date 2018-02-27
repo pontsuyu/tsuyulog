@@ -1,0 +1,139 @@
+---
+title: "ViewPipeStepsの中身を見てみた"
+author: "Tsuyupon"
+date: "`r Sys.Date()`"
+categories: ["packages"]
+tags: ["R"]
+output:
+  blogdown::html_page:
+    toc: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+便利そうなパッケージを教えてもらいました。
+
+<iframe class="hatenablogcard" src="https://hatenablog-parts.com/embed?url=https://github.com/daranzolin/ViewPipeSteps" width="300" height="150" frameborder="0" scrolling="no"></iframe>
+
+どうやら選択した行のパイプ`%>%`ごとの結果に`View`関数を適用してくれるRStudio addinのようです。
+
+```{r, eval=FALSE}
+# devtools::install_github("daranzolin/ViewPipeSteps")
+library(dplyr)
+iris %>% 
+  select(Species, Petal.Length) %>% 
+  filter(Petal.Length > 1.6) %>% 
+  group_by(Species) %>% 
+  summarise(plsum = sum(Petal.Length))
+# 上記4行を選択してAddinsボタンから「View Pipe Chain Steps」を選択
+```
+
+![](https://camo.githubusercontent.com/36ca210a55f91a425118da53bb189d434995b145/68747470733a2f2f6d656469612e67697068792e636f6d2f6d656469612f323470375132446b46707935736c52684f792f67697068792e676966)
+
+おー、便利そう。<br>
+ショートカットキー設定しておけば、こういうパイプごとの検証をマウス使わずに全部完結できますね。
+<br><br>
+では、このアドインの中で何が行われているのでしょうか？<br>
+Rフォルダの中を見てみたいと思います。
+
+## 1. アドインの中身
+
+まずは[R/utils.R](https://github.com/daranzolin/ViewPipeSteps/blob/master/R/utils.R)を見てみましょう。
+
+```{r, eval=FALSE}
+# 1~2要素目,1~3要素目といったパイプごとのまとまりを表すベクトルを返す
+createCalls <- function(x) {
+  # 空白除去
+  x <- purrr::map_chr(x, stringr::str_trim)
+  calls <- list()
+  # group_by系は無視
+  # パイプの区切りごとに"View("を足していく
+  # ここがキーポイント
+  for (i in 2:length(x)) {
+    if (grepl("group_by", x[i])) next
+    call <- paste(paste(x[1:i], collapse = " "), "View(")
+    calls[[i]] <- call
+  }
+  # nullは除去
+  invisible(purrr::discard(calls, is.null))
+}
+```
+
+```{r, eval=FALSE}
+# View()で出てくるタブ名を生成
+createViewTitles <- function(steps) {
+  # group_by系を含む数を計算
+  gbs <- sum(stringr::str_detect(steps, "group_by"))
+  stepInds <- 2:(length(steps) - gbs)
+  # 最初の要素は無視
+  # それぞれの要素の関数名をとってくる
+  steps <- tail(purrr::map(strsplit(steps, "\\("), `[[`, 1), -1) %>%
+    purrr::discard(~grepl("group_by", .)) %>%
+    purrr::map_chr(stringr::str_trim)
+  sprintf("%s. %s", (stepInds - 1), steps)
+}
+```
+
+```{r, eval=FALSE}
+createViews <- function(calls, titles) {
+  # タイトルと閉じ括弧を追加
+  calls <- sprintf("%s title = '%s')", calls, titles)
+  # eval()の結果とエラーとメッセージをリストで返す関数を新たに作る
+  safeEval <- purrr::safely(eval)
+  # ここでcallsの各要素の内容を実行する
+  cList <-  purrr::map(calls, ~safeEval(parse(text = .)))
+  # エラーになった箇所を教えるメッセージを出力する
+  for (i in seq_along(cList)) {
+    if (!is.null(cList[[i]]$error)) {
+      w <- sprintf("Pipe error at step %s: %s", titles[i], cList[[i]]$error)
+      stop(w, call. = FALSE)
+    }
+  }
+}
+```
+
+意外とシンプルな構成要素で出来てましたね。<br>
+これを利用して[\@hoxo_mさんがおっしゃってた](https://twitter.com/hoxo_m/status/967655107255922690) `zeallot`パッケージを使った`c(N, M) %<-% dim(x)`の形式に倣って、<br>
+
+```
+c(SEL, FIL, SUM) %<-% hogehoge({
+  iris %>% 
+    select(Species, Petal.Length) %>% 
+    filter(Petal.Length > 1.6) %>% 
+    group_by(Species) %>% 
+    summarise(plsum = sum(Petal.Length))
+  })
+```
+
+↑みたいなことも出来そうですね。使いどころがあるかと言われると微妙ですが…。
+
+
+次に[R/viewPipeChain.R](https://github.com/daranzolin/ViewPipeSteps/blob/master/R/viewPipeChain.R)を見てみます。
+
+```{r, eval=FALSE}
+viewPipeChain <- function() {
+  # 選択行の取得
+  context <- rstudioapi::getActiveDocumentContext()
+  # 改行\nの除去
+  pc <- stringr::str_remove_all(context$selection[[1]]$text, "\n")
+  #if (!grepl("%>%", pc)) stop("Must highlight a pipe sequence", call. = FALSE)
+  # パイプ区切りにベクトル化
+  pc <- paste(strsplit(pc, "%>%")[[1]], "%>%")
+  # 上で説明した関数を実行していく
+  pcTitles <- createViewTitles(pc)
+  pcCalls <- createCalls(pc)
+  createViews(pcCalls, pcTitles)
+}
+```
+
+utils.Rで作成した関数を選択行に対して実行していく関数のようです。
+`rstudioapi::getActiveDocumentContext()`は選択行（アクティブになっている行）に関する情報を格納してくれるもので、`context$selection[[1]]$text`に選択行が文字列として格納されます。これは`ggThemeAssist`パッケージでも使われて、多くのアドインで使われている関数です。
+
+## 2. まとめ
+
+今回はパッケージの紹介と中身を見てみたということでこれで終わりです。<br>
+
+
+
