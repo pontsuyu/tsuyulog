@@ -1,0 +1,231 @@
+---
+title: "statcastr作成しました"
+author: "Tsuyupon"
+date: "2018-08-04"
+categories: ["baseball", "packages"]
+tags: ["R"]
+output:
+  blogdown::html_page:
+    toc: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+忙しくて全然更新できてなかった間に今年のMLBも半分以上が過ぎてしまいました…。
+
+
+前回はpitchf/xのデータから田中将大投手を見てみましたが、今回は**statcastr**パッケージの紹介がてら今年の田中将大投手の投球を見てみたいと思います。
+
+※pitchf/xとstatcastのデータ取得方法の違いは[ここ](https://twitter.com/m42jp/status/712601603073785856)に、データ内容については[ここ](https://bayesball.github.io/workshop.pdf)が参考になります。  
+statcastの方が打者や野手の動きまで詳細に把握できる分、便利です。
+
+<br><br>
+
+# statcastrパッケージについて
+statcastrパッケージは以下に公開しています。
+
+<iframe class="hatenablogcard" src="https://hatenablog-parts.com/embed?url=https://github.com/pontsuyu/statcastr" width="300" height="150" frameborder="0" scrolling="no"></iframe>
+
+■statcastで使える関数群
+
+- scrape_statcast  
+    ∟このパッケージのメインの関数で任意の期間のピッチング・バッティングのデータをスクレイピングする
+- get_snapshots  
+    ∟scrape_statcastで得たデータから1球ごとの球の軌道を計算する
+- get_strikezones  
+    ∟打者位置ごとにストライクゾーンの平均位置を計算する
+- team_results_ref  
+    ∟指定チームのスケジュールと勝敗をスクレイピングする
+- theme_batterbox  
+    ∟ggplot2と併用する。バッターボックスのlayerを描く
+
+<br><br>
+
+# 今年の田中将大投手の成績について
+
+以下の表は田中投手のMLBでの成績です。（2018年8月4日現在）
+
+|年   |チーム| 登板|投球回| 完投| 自責点|  奪三振| 勝| 敗| セーブ| WHIP| 防御率|
+|:----|:----------|----:|---:|----:|----:|---:|--:|--:|--:|----:|----:|
+|2014 |ヤンキース |   20|136 1/3|    3|   42| 141| 13|  5|  0| 1.06| 2.77|
+|2015 |ヤンキース |   24|154|    1|   60| 139| 12|  7|  0| 0.99| 3.51|
+|2016 |ヤンキース |   31|199 2/3|    0|   68| 165| 14|  4|  0| 1.08| 3.07|
+|2017 |ヤンキース |   30|178 1/3|    1|   94| 194| 13| 12|  0| 1.24| 4.74|
+|2018 |ヤンキース |   17| 98 1/3|    1|   42| 100|  9|  2|  0| 1.05| 3.84|
+
+昨年に比べてだいぶ調子を取り戻せてますね。  
+マーくん、半端ないって…。
+
+<br><br>
+
+# 今年の田中将大投手の変化球について
+
+```{r cache=TRUE}
+# devtools::install_github("pontsuyu/statcastr")
+library("statcastr")
+library("tidyverse")
+library("ggrepel")
+# 2015〜2018年のスクレイピングの実行して保存しておく
+# data <- list()
+# data[[1]] <- scrape_statcast("2015-04-06", "2015-10-04", pit_bat = "pitcher")
+# data[[2]] <- scrape_statcast("2016-04-03", "2016-10-02", pit_bat = "pitcher")
+# data[[3]] <- scrape_statcast("2017-04-02", "2017-10-01", pit_bat = "pitcher")
+# data[[4]] <- scrape_statcast("2018-04-02", "2018-07-30", pit_bat = "pitcher")
+# data <- data %>% 
+#   bind_rows %>% 
+#   left_join(player_ids, by=c("pitcher"="MLBID"))
+# write.csv(data, "data.csv", row.names=F)
+data <- data.table::fread("data.csv", data.table = F)
+use_col <- c("pitch_n", "game_date", "inning",  
+             "pitch_name", "pitch_type", "release_speed",
+             "release_pos_x", "release_pos_y", "release_pos_z",
+             "player_name", "batter", "pitcher",
+             "events", "description", "des",
+             "spin_dir", "zone",
+             "game_type", "stand", "p_throws",
+             "home_team", "away_team",
+             "type", "hit_location",
+             "bb_type", "outs_when_up", "balls", "strikes",
+             "pfx_x", "pfx_z",
+             "plate_x", "plate_z",
+             "on_3b", "on_2b", "on_1b",
+             "inning", "inning_topbot",
+             "hc_x", "hc_y",
+             "vx0", "vy0", "vz0",
+             "ax", "ay", "az",
+             "sz_top", "sz_bot")
+
+# 見たいピッチャーの名前を入力
+p_name <- "Masahiro Tanaka"
+pitch <- data %>% 
+         filter(PLAYERNAME==p_name, 
+                !(pitch_name %in% c("", "Pitch Out"))) %>% 
+         select_(.dots = use_col) %>% 
+         separate(game_date, c("year", "month", "day"), sep = "-")
+# 球種の割合
+pt <- pitch %>% 
+      group_by(year, stand, pitch_name) %>% 
+      summarise(N = n()) %>% 
+      group_by(year, stand) %>% 
+      mutate(per = N/sum(N)*100) %>% 
+      arrange(year, pitch_name) %>% 
+      mutate(row = row_number()) %>% 
+      arrange(desc(row)) %>% 
+      group_by(year, stand) %>% # 以下、可視化用処理
+      mutate(cumsum = cumsum(per) - 0.5 * per,
+             year_N = paste0(stand, "_", year, "(N=", sum(N), ")")) %>% 
+      ungroup %>% 
+      as.data.frame
+
+# 年別打者位置ごとの球種割合
+p1 <- ggplot(pt, aes(year_N, per, fill = pitch_name)) + 
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = round(per, digits = 2), y = cumsum), size = 3) +
+  labs(title=paste0("Proportion of pitch names (", p_name, ")")) +
+  xlab("stand_year_pitching-N") + ylab("percent") + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(hjust = 0.5))
+
+# 年別変化球の変化量
+breaking <- pitch %>%
+  group_by(year,pitch_name) %>%
+  summarise(x=-mean(as.numeric(pfx_x)*30.48, na.rm = T), # 1feet=30.48cm
+            z=mean(as.numeric(pfx_z)*30.48, na.rm = T)) %>%
+  mutate(angle=ifelse(x<0, pi+atan(z/x), atan(z/x))) %>%
+  as.data.frame
+
+p2 <- ggplot(breaking, aes(0, 0)) +
+  geom_point(data = pitch, 
+             aes(-as.numeric(pfx_x)*30.48, as.numeric(pfx_z)*30.48, color=pitch_name)) +
+  geom_spoke(aes(angle = angle, radius = sqrt(x^2+z^2)), arrow = arrow()) +
+  geom_label_repel(aes(x=x, y=z+.5, label = pitch_name, color=pitch_name),
+                   size= 3, label.size = 0.5,
+                   fontface = "bold", segment.size = 1.5) +
+  ggtitle("各球種の変化量(投手視点)") +
+  xlab("横の変化量(cm)") + ylab("縦の変化量(cm)") +
+  theme_bw(base_family = "Osaka") +
+  facet_wrap(~year)
+```
+
+![](https://user-images.githubusercontent.com/6095476/43671746-b864078e-97da-11e8-891d-1b2a5abe49c5.png)
+
+前回の記事と比較するとわかりますが、pitchf/xのデータとほぼ一致しています。  
+ただ2シームがシンカーとして扱われているのは注意です。
+
+![](https://user-images.githubusercontent.com/6095476/43672460-50e5ce08-97e9-11e8-98eb-f92118aefa27.png)
+
+<div style="text-align: center">各年の平均球速</div>
+
+|pitch_name      |  2015|  2016|  2017|  2018|
+|:---------------|-----:|-----:|-----:|-----:|
+|4-Seam Fastball | 149.3| 149.1| 148.6| 147.8|
+|Changeup        |     -|     -|     -| 141.6|
+|Curveball       | 124.0| 122.5| 123.7| 123.9|
+|Cutter          | 144.3| 144.0| 144.2| 143.0|
+|Sinker          | 147.8| 146.5| 147.2| 146.1|
+|Slider          | 135.6| 136.1| 136.3| 134.3|
+|Split Finger    | 141.8| 140.3| 141.0| 139.3|
+
+今年は変化球の投球割合もストレート(4-Seam Fastball)主体となり、スライダーやスプリットがより活きる形にできているようです。また、スライダーの横変化が大きくなっているのも特徴的です。
+
+<br><br>
+
+# 便利な可視化方法について
+
+[gganimate](https://github.com/thomasp85/gganimate)パッケージや[plotly](https://github.com/ropensci/plotly)パッケージを駆使するといろいろ見ることが出来ます。
+
+```{r cache=TRUE, warning=F}
+xyz <- get_snapshots(pitch %>% filter(year==2018), interval = 0.01)
+sz <- get_strikezones(pitch %>% filter(year==2018))
+#x:プレートと並行な面
+use_col <- colnames(pitch)
+x <- cbind(pitch %>% filter(!is.na(release_pos_x),year==2018), xyz[,,1]) %>% 
+  gather("time", "X", -use_col) %>% 
+  mutate(time = as.numeric(time)) %>% 
+  arrange(pitch_n, time)
+#y:ピッチャーとバッター間の面
+y <- cbind(pitch %>% filter(!is.na(release_pos_x),year==2018), xyz[,,2]) %>% 
+  gather("time", "Y", -use_col) %>% 
+  mutate(time = as.numeric(time)) %>% 
+  arrange(pitch_n, time)
+xy <- inner_join(x, y)
+#z:地面からの高さ
+z <- cbind(pitch %>% filter(!is.na(release_pos_x),year==2018), xyz[,,3]) %>% 
+  gather("time", "Z", -use_col) %>% 
+  mutate(time = as.numeric(time)) %>% 
+  arrange(pitch_n, time)
+xz <- inner_join(x, z)
+rm(x, y, z)
+
+p1 <- ggplot(data=xz, aes(x=X, y=Z)) +
+    geom_rect(data = sz, inherit.aes = F,
+              mapping = aes(xmin = Left, xmax=Right,
+                            ymin=Bottom, ymax=Top, group=stand),
+              fill="transparent", color="black") +
+    geom_point(aes(fill=pitch_type), alpha=0.5,color="grey20",
+               shape=21,size=2,stroke=1) +
+    theme_bw() + 
+    facet_grid(~stand)+ 
+    gganimate::transition_manual(time)
+print(p1)
+
+p2<- ggplot(data=xy[1:1000,], aes(x=X,y=Y)) +
+  geom_point(aes(color=pitch_type), shape=16, size=1, na.rm=TRUE) +
+  theme_batterbox()
+plotly::plotly_build(p2)
+```
+
+インタラクティブにいろいろ試したいときplotly便利ですよね。
+
+<br><br>
+
+# 最後に
+今回はパッケージの紹介ということでスクレイピング・可視化を中心に書きました。  
+最近は大谷翔平選手も調子が上がってきて、2打席連続本塁打を打つなど調子がいいので、今度はバッター側の分析もおこなってみたいと思います。  
+
+
+
