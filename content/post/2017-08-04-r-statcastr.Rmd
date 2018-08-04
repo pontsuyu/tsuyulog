@@ -178,7 +178,7 @@ p2 <- ggplot(breaking, aes(0, 0)) +
 
 [gganimate](https://github.com/thomasp85/gganimate)パッケージや[plotly](https://github.com/ropensci/plotly)パッケージを駆使するといろいろ見ることが出来ます。
 
-```{r cache=TRUE, warning=F, fig.width=4}
+```{r cache=TRUE, warning=F, fig.width=8}
 xyz <- get_snapshots(pitch %>% filter(year==2018), interval = 0.01)
 sz <- get_strikezones(pitch %>% filter(year==2018))
 #x:プレートと並行な面
