@@ -209,7 +209,7 @@ p1 <- ggplot(data=xz, aes(x=X, y=Z)) +
     geom_point(aes(fill=pitch_type), alpha=0.5,color="grey20",
                shape=21,size=2,stroke=1) +
     ggtitle("1球ごとのアニメーション（審判目線）") +
-    theme_bw() + 
+    theme_bw(base_family = "Osaka") + 
     facet_grid(~stand)+ 
     gganimate::transition_manual(time)
 print(p1)
