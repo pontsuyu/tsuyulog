@@ -178,7 +178,7 @@ p2 <- ggplot(breaking, aes(0, 0)) +
 
 [gganimate](https://github.com/thomasp85/gganimate)パッケージや[plotly](https://github.com/ropensci/plotly)パッケージを駆使するといろいろ見ることが出来ます。
 
-```{r cache=TRUE, warning=F}
+```{r cache=TRUE, warning=F, fig.width=4}
 xyz <- get_snapshots(pitch %>% filter(year==2018), interval = 0.01)
 sz <- get_strikezones(pitch %>% filter(year==2018))
 #x:プレートと並行な面
@@ -208,6 +208,7 @@ p1 <- ggplot(data=xz, aes(x=X, y=Z)) +
               fill="transparent", color="black") +
     geom_point(aes(fill=pitch_type), alpha=0.5,color="grey20",
                shape=21,size=2,stroke=1) +
+    ggtitle("1球ごとのアニメーション（審判目線）") +
     theme_bw() + 
     facet_grid(~stand)+ 
     gganimate::transition_manual(time)
