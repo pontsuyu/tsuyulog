@@ -4,3 +4,4 @@
 .Ruserdata
 content/post/*.sqlite3
 docs/post/*.sqlite3
+blogdown/post/*/html/
