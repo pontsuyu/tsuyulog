@@ -1,0 +1,17 @@
+base
+dplyr
+tidyr
+data.table
+magrittr
+XML
+xml2
+ggplot2
+statcastr
+tidyverse
+tibble
+readr
+purrr
+stringr
+forcats
+ggrepel
+bindrcpp
