@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Packages on Tsuyulog</title>
-    <link>https://pontsuyu.github.io/blog_template/categories/packages/</link>
+    <link>/categories/packages/</link>
     <description>Recent content in Packages on Tsuyulog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
     <lastBuildDate>Sat, 04 Aug 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://pontsuyu.github.io/blog_template/categories/packages/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/packages/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>statcastr作成しました</title>
-      <link>https://pontsuyu.github.io/blog_template/post/2018/08/04/statcastr%E4%BD%9C%E6%88%90%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/</link>
+      <link>/post/2018/08/04/statcastr%E4%BD%9C%E6%88%90%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/</link>
       <pubDate>Sat, 04 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://pontsuyu.github.io/blog_template/post/2018/08/04/statcastr%E4%BD%9C%E6%88%90%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/</guid>
+      <guid>/post/2018/08/04/statcastr%E4%BD%9C%E6%88%90%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/</guid>
       <description>忙しくて全然更新できてなかった間に今年のMLBも半分以上が過ぎてしまいました…。 前回はpitchf/xのデータから田中将大投手を見てみました</description>
     </item>
     
     <item>
       <title>ViewPipeStepsの中身を見てみた</title>
-      <link>https://pontsuyu.github.io/blog_template/post/2018/02/28/viewpipesteps%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%82%92%E8%A6%8B%E3%81%A6%E3%81%BF%E3%81%9F/</link>
+      <link>/post/2018/02/28/viewpipesteps%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%82%92%E8%A6%8B%E3%81%A6%E3%81%BF%E3%81%9F/</link>
       <pubDate>Wed, 28 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://pontsuyu.github.io/blog_template/post/2018/02/28/viewpipesteps%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%82%92%E8%A6%8B%E3%81%A6%E3%81%BF%E3%81%9F/</guid>
+      <guid>/post/2018/02/28/viewpipesteps%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%82%92%E8%A6%8B%E3%81%A6%E3%81%BF%E3%81%9F/</guid>
       <description>便利そうなパッケージを教えてもらいました。 どうやら選択した行のパイプ%&amp;gt;%ごとの結果にView関数を適用してくれるRStudio add</description>
     </item>
     

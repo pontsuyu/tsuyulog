@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Tsuyulog</title>
-    <link>https://pontsuyu.github.io/blog_template/categories/</link>
+    <link>/categories/</link>
     <description>Recent content in Categories on Tsuyulog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
     <lastBuildDate>Sat, 04 Aug 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://pontsuyu.github.io/blog_template/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Baseball</title>
-      <link>https://pontsuyu.github.io/blog_template/categories/baseball/</link>
+      <link>/categories/baseball/</link>
       <pubDate>Sat, 04 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://pontsuyu.github.io/blog_template/categories/baseball/</guid>
+      <guid>/categories/baseball/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Packages</title>
-      <link>https://pontsuyu.github.io/blog_template/categories/packages/</link>
+      <link>/categories/packages/</link>
       <pubDate>Sat, 04 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://pontsuyu.github.io/blog_template/categories/packages/</guid>
+      <guid>/categories/packages/</guid>
       <description></description>
     </item>
     
