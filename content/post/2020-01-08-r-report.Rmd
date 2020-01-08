@@ -1,0 +1,61 @@
+---
+title: "2019年　12球団の投手事情"
+author: "Tsuyupon"
+date: "2020-01-08"
+categories: ["baseball"]
+tags: ["R"]
+output:
+  blogdown::html_page:
+    toc: false
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r echo=F, warning=F}
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(rvest)
+  library(ggrepel)
+})
+
+team <- c("g", "yb", "t", "c", "d", "s", "l", "h", "e", "m", "f", "bs")
+urls <- paste0("https://baseball-data.com/stats/pitcher-", team, "/")
+dat <- sapply(urls, function(x) x %>% read_html() %>% html_table())
+names(dat) <- team
+dat <- bind_rows(dat, .id = "team")
+
+
+res <- dat %>% 
+  mutate(試合 = as.numeric(試合),
+         セーブ = as.numeric(セlブ), ホールド = as.numeric(ホlルド),
+         y = セーブ + ホールド) %>% 
+  filter(complete.cases(.), y > 0)
+
+team_id  <- c("g", "yb", "t", "c", "d", "s", "l", "h", "e", "m", "f", "bs")
+team_col <- c("#F97709", "#0055A5", "#FFE201", "#FF2B06", "#002569", "#00AB5C",
+              "#1F366A", "#F5C700", "#860010", "#221815", "#4C7B98", "#000019")
+```
+
+
+```{r echo=F, warning=FALSE}
+selectInput("team", label = "Team",
+          c("巨人"=1, "DeNA"=2, "阪神"=3, "広島"=4, "中日"=5, "ヤクルト"=6,
+            "西武"=7, "ソフトバンク"=8, "楽天"=9, "ロッテ"=10, "日ハム"=11, "オリックス"=12))
+
+# renderPrint(input$team)
+
+renderPlot({
+ ggplot(res %>% filter(team==team_id[as.numeric(input$team)]), aes(試合, y, col=team)) +
+  geom_point() +
+  geom_text_repel(aes(label = 選手名), family="Osaka") +
+  ylab("ホールド＋セーブ") +
+  scale_color_manual(values = team_col[as.numeric(input$team)]) +
+  theme_bw(base_family = "Osaka") +
+  theme(legend.position = "none")
+})
+```
+
+
